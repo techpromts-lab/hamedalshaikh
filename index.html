@@ -222,7 +222,7 @@
     }
 
     /* ============================================================
-       HERO — Full Bleed Image Background (Dark Image)
+       HERO — Full Bleed Image Background
        ============================================================ */
     .hero {
       position: relative;
@@ -251,7 +251,7 @@
       height: 100%;
       object-fit: cover;
       transform: translate(-50%, -50%) scale(1.05);
-      filter: saturate(1.1) contrast(1.05) brightness(0.7); /* Adjusted for dark image */
+      filter: saturate(1.1) contrast(1.05) brightness(0.7);
       animation: slow-zoom 30s ease-in-out infinite alternate;
       will-change: transform;
     }
@@ -319,12 +319,12 @@
     .hero h1 {
       margin: 26px 0 0; font-size: clamp(48px, 8vw, 100px); line-height: 1.05;
       letter-spacing: -.075em; font-weight: 800; text-wrap: balance;
-      text-shadow: 0 6px 40px rgba(8,9,13,0.9), 0 0 60px rgba(167,139,250,0.15); /* Added glow */
+      text-shadow: 0 6px 40px rgba(8,9,13,0.9), 0 0 60px rgba(167,139,250,0.15);
     }
     .hero-role {
       min-height: 36px; margin: 26px 0 0; color: var(--soft);
       font-size: clamp(17px,2vw,22px);
-      text-shadow: 0 2px 16px rgba(8,9,13,0.85), 0 0 40px rgba(167,139,250,0.1); /* Added glow */
+      text-shadow: 0 2px 16px rgba(8,9,13,0.85), 0 0 40px rgba(167,139,250,0.1);
     }
     .type-text { color: var(--accent); }
     .caret {
@@ -352,19 +352,32 @@
     .orbit::before { inset: 12%; }
     .orbit::after { inset: 25%; }
     @keyframes slow-rotate { to { transform: rotate(360deg); } }
+    
+    /* UPDATED: Orbit Core now holds the Techpromts Logo */
     .orbit-core {
       width: 145px; aspect-ratio: 1; display: grid; place-items: center; border-radius: 35px;
       transform: rotate(-12deg);
       background: linear-gradient(145deg, rgba(167,139,250,.28), rgba(120,162,255,.12));
       border: 1px solid rgba(198,180,255,.4);
       box-shadow: 0 0 70px rgba(167,139,250,.28);
-      font: 800 42px "DM Mono", monospace; color: #e1d8ff;
       -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      overflow: hidden; /* Ensures the image fits perfectly inside the rounded corners */
+      transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s;
     }
+    .orbit-core:hover {
+      transform: rotate(0deg) scale(1.05);
+      box-shadow: 0 0 90px rgba(167,139,250,.45);
+    }
+    .orbit-logo {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+    }
+
     .orbit-dot { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 22px var(--accent); }
     .orbit-dot.one { top: 13%; left: 27%; }
     .orbit-dot.two { right: 8%; top: 48%; width: 8px; height: 8px; background: var(--blue); }
     .orbit-dot.three { bottom: 15%; left: 20%; width: 7px; height: 7px; background: var(--mint); }
+    
     .float-chip {
       position: absolute; padding: 10px 13px; border: 1px solid var(--line); border-radius: 12px;
       background: rgba(16,19,27,.75); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
@@ -385,7 +398,7 @@
 
     #heroParticles {
       position: absolute; inset: 0; width: 100%; height: 100%;
-      pointer-events: none; opacity: .45; z-index: 0; /* Increased opacity */
+      pointer-events: none; opacity: .45; z-index: 0;
     }
     .hero-art > *:not(canvas) { position: relative; z-index: 1; }
 
@@ -538,7 +551,7 @@
     .footer-links a:hover { color: #fff; }
 
     /* ============================================================
-       PREMIUM ANIMATIONS (Enhanced)
+       PREMIUM ANIMATIONS
        ============================================================ */
     [data-reveal] {
       opacity: 0;
@@ -558,7 +571,7 @@
       transform: translateY(40px) scale(0.98);
       filter: blur(8px);
       transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo), filter 1s var(--ease-out-expo);
-      transition-delay: calc(var(--i, 0) * 120ms); /* Increased delay */
+      transition-delay: calc(var(--i, 0) * 120ms);
     }
     [data-stagger].is-visible > * {
       opacity: 1;
@@ -714,7 +727,10 @@
             <canvas id="heroParticles"></canvas>
             <div class="orbit">
               <span class="orbit-dot one"></span><span class="orbit-dot two"></span><span class="orbit-dot three"></span>
-              <div class="orbit-core">&lt;/&gt;</div>
+              <!-- Updated: Added the Techpromts logo here -->
+              <div class="orbit-core">
+                <img src="https://i.ibb.co/HTMT7D7g/techpromts-logo.jpg" alt="Techpromts Logo" class="orbit-logo">
+              </div>
             </div>
             <div class="float-chip chip-a"><i class="fa-solid fa-code"></i> &nbsp; BUILD WITH INTENT</div>
             <div class="float-chip chip-b"><i class="fa-solid fa-lightbulb"></i> &nbsp; IDEAS → REALITY</div>
@@ -1081,8 +1097,8 @@
             const rect = card.getBoundingClientRect();
             const x = (e.clientX - rect.left) / rect.width;
             const y = (e.clientY - rect.top) / rect.height;
-            const rotateX = (y - 0.5) * -10; // Increased intensity
-            const rotateY = (x - 0.5) * 10;  // Increased intensity
+            const rotateX = (y - 0.5) * -10;
+            const rotateY = (x - 0.5) * 10;
             card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
           });
 
@@ -1100,15 +1116,15 @@
             const y = e.clientY - rect.top;
             btn.style.setProperty("--mx", `${x}px`);
             btn.style.setProperty("--my", `${y}px`);
-            const moveX = (x / rect.width - 0.5) * 12; // Increased movement
-            const moveY = (y / rect.height - 0.5) * 12; // Increased movement
+            const moveX = (x / rect.width - 0.5) * 12;
+            const moveY = (y / rect.height - 0.5) * 12;
             btn.style.transform = `translate(${moveX}px, ${moveY}px) translateY(-3px)`;
           });
           btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
         });
       }
 
-      /* Hero particles - Enhanced */
+      /* Hero particles */
       function initParticles() {
         if (reducedMotion) return;
         const canvas = $("heroParticles");
@@ -1119,7 +1135,7 @@
         const DPR = Math.min(window.devicePixelRatio || 1, 2);
         let width = 0, height = 0;
         const particles = [];
-        const COUNT = window.innerWidth < 680 ? 20 : 40; // More particles
+        const COUNT = window.innerWidth < 680 ? 20 : 40;
 
         function resize() {
           const rect = canvas.parentElement.getBoundingClientRect();
@@ -1136,7 +1152,7 @@
           return {
             x: Math.random() * width,
             y: Math.random() * height,
-            r: Math.random() * 2 + 0.5, // Slightly larger
+            r: Math.random() * 2 + 0.5,
             vx: (Math.random() - 0.5) * 0.3,
             vy: (Math.random() - 0.5) * 0.3,
             hue: Math.random() > 0.5 ? "167,139,250" : "120,162,255",
