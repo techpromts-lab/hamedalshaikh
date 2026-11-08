@@ -125,6 +125,25 @@
       outline-offset: 4px;
     }
 
+    /* Skip link (accessibility) */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 16px;
+      z-index: 999;
+      padding: 10px 16px;
+      background: var(--accent);
+      color: #000;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      transition: top .25s var(--ease);
+    }
+
+    .skip-link:focus {
+      top: 16px;
+    }
+
     .shell {
       width: min(var(--container), calc(100% - 48px));
       margin-inline: auto;
@@ -583,7 +602,6 @@
           calc(-50% + var(--hero-scroll,0px))
         ) scale(1.05);
       }
-
       to {
         transform: translate(
           -50%,
@@ -719,7 +737,6 @@
         transform: translateY(34px);
         filter: blur(14px);
       }
-
       to {
         opacity: 1;
         transform: translateY(0);
@@ -986,7 +1003,6 @@
       0%,100% {
         transform: translateY(0) rotate(0);
       }
-
       50% {
         transform: translateY(-17px) rotate(-2deg);
       }
@@ -1245,100 +1261,6 @@
       color: var(--muted);
       font-size: 12px;
       line-height: 1.9;
-    }
-
-    /* =========================================
-       SHOWCASE
-    ========================================= */
-
-    .showcase {
-      text-align: center;
-    }
-
-    .showcase .section-intro {
-      margin-inline: auto;
-    }
-
-    .visual-card {
-      display: block;
-      margin-top: 42px;
-      padding: 0;
-      overflow: hidden;
-
-      border-radius: var(--radius);
-      position: relative;
-
-      border: 1px solid var(--line);
-
-      transition:
-        transform .4s var(--expo),
-        border-color .4s,
-        box-shadow .4s;
-
-      box-shadow: 0 24px 80px rgba(0,0,0,.3);
-    }
-
-    .visual-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(179,154,255,.45);
-      box-shadow: 0 30px 90px rgba(179,154,255,.15);
-    }
-
-    .visual-card img {
-      display: block;
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-
-      filter: saturate(.85) brightness(.78);
-
-      transition:
-        transform .6s var(--expo),
-        filter .6s;
-    }
-
-    .visual-card:hover img {
-      transform: scale(1.04);
-      filter: saturate(1.08) brightness(.95);
-    }
-
-    .visual-overlay {
-      position: absolute;
-      inset: 0;
-
-      display: flex;
-      align-items: flex-end;
-
-      padding: clamp(20px,4vw,40px);
-
-      background: linear-gradient(
-        to top,
-        rgba(0,0,0,.9),
-        transparent 60%
-      );
-
-      pointer-events: none;
-    }
-
-    .visual-text {
-      text-align: left;
-    }
-
-    .visual-kicker {
-      color: var(--accent);
-      font: 10px "DM Mono",monospace;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-      display: block;
-    }
-
-    .visual-title {
-      font-size: clamp(20px,3vw,28px);
-      font-weight: 800;
-      letter-spacing: -.03em;
-      color: #fff;
-      display: block;
     }
 
     /* =========================================
@@ -1847,10 +1769,6 @@
       .hero-foot {
         margin-top: 42px;
       }
-
-      .visual-overlay {
-        padding: 20px;
-      }
     }
 
     /* =========================================
@@ -1913,7 +1831,6 @@
         <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#focus">What I do</a>
-        <a href="#showcase">Showcase</a>
         <a href="#techpromts">techpromts</a>
 
         <a class="nav-cta" href="#contact">
@@ -2328,64 +2245,6 @@
 
     </section>
 
-    <!-- SHOWCASE -->
-
-    <section class="showcase" id="showcase">
-
-      <div class="shell">
-
-        <div class="section-heading" data-reveal>
-
-          <div class="eyebrow">
-            03 / VISUAL SHOWCASE
-          </div>
-
-          <h2>
-            A little more <span class="gradient">visual.</span>
-          </h2>
-
-          <p class="section-intro">
-            A close-up of modern technology, selected as the visual
-            backdrop for this portfolio.
-          </p>
-
-        </div>
-
-        <a
-          class="visual-card panel"
-          href="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2400&q=90"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-reveal
-        >
-
-          <img
-            src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=2400&q=90"
-            alt="Technology and computer hardware visual"
-            loading="lazy"
-            decoding="async"
-          >
-
-          <div class="visual-overlay">
-
-            <div class="visual-text">
-              <span class="visual-kicker">
-                FEATURED VISUAL
-              </span>
-
-              <span class="visual-title">
-                Open Full Resolution
-              </span>
-            </div>
-
-          </div>
-
-        </a>
-
-      </div>
-
-    </section>
-
     <!-- TECHPROMTS -->
 
     <section id="techpromts">
@@ -2395,7 +2254,7 @@
         <div class="section-heading" data-reveal>
 
           <div class="eyebrow">
-            04 / FOUNDER
+            03 / FOUNDER
           </div>
 
           <h2>
@@ -2519,7 +2378,7 @@
         <div class="contact-card panel" data-reveal>
 
           <div class="eyebrow">
-            05 / START A CONVERSATION
+            04 / START A CONVERSATION
           </div>
 
           <h2>
