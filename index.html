@@ -18,12 +18,12 @@
 
   <title>Hamed Alshaikh — Developer & Founder</title>
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2308090d'/%3E%3Ctext x='50' y='70' font-family='monospace' font-size='56' font-weight='700' fill='%23a78bfa' text-anchor='middle'%3Eh%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2308090d'/%3E%3Ctext x='50' y='70' font-family='monospace' font-size='56' font-weight='700' fill='%23a78bfa' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="preconnect" href="https://files.catbox.moe" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="preconnect" href="https://i.ibb.co" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer">
@@ -133,8 +133,11 @@
       border-color: var(--line);
     }
     .nav { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-    .brand { font-size: 20px; font-weight: 800; letter-spacing: -1.2px; }
+    
+    /* Updated Brand to full name */
+    .brand { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
     .brand span { color: var(--accent); }
+    
     .nav-links { display: flex; align-items: center; gap: 30px; }
     .nav-links a {
       color: var(--muted); font-size: 12px; font-weight: 700;
@@ -221,7 +224,7 @@
     }
 
     /* ============================================================
-       HERO — Full Bleed GIF Background
+       HERO — Full Bleed Image Background
        ============================================================ */
     .hero {
       position: relative;
@@ -233,7 +236,6 @@
       padding: 145px 0 90px;
     }
 
-    /* GIF Background Wrapper */
     .hero-bg-wrap {
       position: absolute;
       inset: 0;
@@ -243,7 +245,7 @@
       background: #08090d;
     }
 
-    .hero-bg-gif {
+    .hero-bg-img {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -251,7 +253,7 @@
       height: 100%;
       object-fit: cover;
       transform: translate(-50%, -50%) scale(1.05);
-      filter: saturate(1.2) contrast(1.1) brightness(0.85);
+      filter: saturate(1.2) contrast(1.1) brightness(0.8);
       animation: slow-zoom 30s ease-in-out infinite alternate;
       will-change: transform;
     }
@@ -438,7 +440,7 @@
     .focus-card h3 { margin: 0 0 9px; font-size: 16px; }
     .focus-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.9; }
 
-    /* Showcase - Updated for GIF */
+    /* Showcase - Updated for Image */
     .showcase { text-align: center; }
     .showcase .section-intro { margin-inline: auto; }
     .visual-card {
@@ -575,7 +577,7 @@
       }
       [data-reveal], [data-stagger] > * { opacity: 1 !important; transform: none !important; filter: none !important; }
       #heroParticles { display: none; }
-      .hero-bg-gif { animation: none; }
+      .hero-bg-img { animation: none; }
     }
 
     /* ============================================================
@@ -597,6 +599,7 @@
       
       /* Nav */
       .nav { min-height: 70px; }
+      .brand { font-size: 16px; }
       .menu-toggle { display: grid; place-items: center; }
       .nav-links {
         display: none; position: absolute; top: 69px; left: 0; right: 0; padding: 20px 24px 24px;
@@ -650,7 +653,9 @@
 
   <header class="site-header" id="siteHeader">
     <nav class="nav shell" aria-label="Main navigation">
-      <a class="brand" href="#home" aria-label="Hamed Alshaikh — home">hamed<span>.</span></a>
+      <!-- تم تعديل الاسم هنا -->
+      <a class="brand" href="#home" aria-label="Hamed Alshaikh — home">Hamed Alshaikh<span>.</span></a>
+      
       <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="navLinks">
         <i class="fa-solid fa-bars" aria-hidden="true"></i>
       </button>
@@ -667,9 +672,17 @@
 
   <main id="main">
     <section class="hero" id="home">
-      <!-- Full Bleed GIF Background -->
+      <!-- Full Bleed Image Background -->
       <div class="hero-bg-wrap" aria-hidden="true">
-        <img src="https://files.catbox.moe/tbftfi.gif" alt="" class="hero-bg-gif">
+        <!-- 
+          ملاحظة هامة: رابط Pinterest الذي أرسلته هو رابط صفحة وليس صورة مباشرة. 
+          لكي تظهر صورتك، اذهب للرابط، اضغط بالزر الأيمن على الصورة واختر "نسخ عنوان الصورة".
+          ثم استبدل الرابط أدناه بالرابط المباشر (الذي يبدأ بـ https://i.pinimg.com/...)
+        -->
+        <img 
+          src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop" 
+          alt="" 
+          class="hero-bg-img">
       </div>
       
       <div class="hero-overlay" aria-hidden="true"></div>
@@ -803,17 +816,18 @@
       </div>
     </section>
 
-    <!-- Showcase Section Replaced with GIF Display -->
+    <!-- Showcase Section Updated for Image -->
     <section class="showcase" id="showcase">
       <div class="shell">
         <div class="section-heading" data-reveal>
           <div class="eyebrow">03 / VISUAL SHOWCASE</div>
           <h2>A little more <span class="gradient">visual.</span></h2>
-          <p class="section-intro">A featured visual loop currently playing behind the hero section. Explore the full experience below.</p>
+          <p class="section-intro">A featured visual currently playing behind the hero section. Explore the full experience below.</p>
         </div>
 
-        <a class="visual-card panel" href="https://files.catbox.moe/tbftfi.gif" target="_blank" rel="noopener noreferrer" data-reveal>
-          <img src="https://files.catbox.moe/tbftfi.gif" alt="Featured Visual Showcase by Hamed Alshaikh" loading="lazy">
+        <a class="visual-card panel" href="https://www.pinterest.com/pin/725220346275477142/" target="_blank" rel="noopener noreferrer" data-reveal>
+          <!-- استبدل هذا الرابط برابط صورتك المباشر من Pinterest أيضاً -->
+          <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop" alt="Featured Visual Showcase by Hamed Alshaikh" loading="lazy">
           <div class="visual-overlay">
             <div class="visual-text">
               <span class="visual-kicker">FEATURED VISUAL</span>
@@ -899,7 +913,8 @@
 
   <footer>
     <div class="footer-inner shell">
-      <a class="brand" href="#home">hamed<span>.</span></a>
+      <!-- تم تعديل الاسم هنا أيضاً -->
+      <a class="brand" href="#home">Hamed Alshaikh<span>.</span></a>
       <p><span id="year">2026</span> Hamed Alshaikh. Made for the web.</p>
       <div class="footer-links">
         <a href="#home">Back to top ↑</a>
@@ -919,7 +934,7 @@
       const header = $("siteHeader");
       const progress = $("scrollProgress");
       const backToTop = $("backToTop");
-      const heroGif = document.querySelector(".hero-bg-gif");
+      const heroImg = document.querySelector(".hero-bg-img");
       let ticking = false;
 
       function updateScrollUI() {
@@ -929,10 +944,10 @@
         header.classList.toggle("scrolled", window.scrollY > 24);
         backToTop.classList.toggle("visible", window.scrollY > 650);
 
-        // Parallax for hero GIF
-        if (heroGif && !reducedMotion && window.scrollY < window.innerHeight) {
+        // Parallax for hero image
+        if (heroImg && !reducedMotion && window.scrollY < window.innerHeight) {
           // Combine the base animation scale with the scroll translation
-          heroGif.style.transform = `translate(-50%, calc(-50% + ${window.scrollY * 0.4}px)) scale(1.05)`;
+          heroImg.style.transform = `translate(-50%, calc(-50% + ${window.scrollY * 0.4}px)) scale(1.05)`;
         }
 
         ticking = false;
