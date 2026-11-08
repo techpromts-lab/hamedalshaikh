@@ -344,7 +344,7 @@
     .hero-art { min-height: 430px; position: relative; display: grid; place-items: center; }
     
     /* ============================================================
-       ORBIT SYSTEM (Lines rotate, Square floats)
+       ORBIT SYSTEM
        ============================================================ */
     .orbit {
       width: min(100%, 390px); aspect-ratio: 1;
@@ -366,7 +366,6 @@
 
     @keyframes slow-rotate { to { transform: rotate(360deg); } }
 
-    /* New Wrapper for the floating effect */
     .orbit-core-wrapper {
       position: relative; z-index: 2;
       animation: float-core 4s ease-in-out infinite alternate;
@@ -708,8 +707,13 @@
 
   <main id="main">
     <section class="hero" id="home">
-      <!-- Full Bleed Dark Image Background -->
+      <!-- Full Bleed Background Image -->
       <div class="hero-bg-wrap" aria-hidden="true">
+        <!-- 
+          🔴 هنا المكان المخصص لتغيير الصورة:
+          استبدل الرابط أدناه بالرابط المباشر لصورتك الجديدة من ImgBB.
+          للحصول على الرابط المباشر: افتح صفحة الصورة، اضغط بزر الماوس الأيمن على الصورة، واختر "نسخ عنوان الصورة".
+        -->
         <img 
           src="https://i.ibb.co/8LfcwQCT/image.jpg" 
           alt="" 
@@ -752,9 +756,7 @@
           <div class="hero-art delay-2" data-reveal aria-hidden="true">
             <canvas id="heroParticles"></canvas>
             
-            <!-- Updated Orbit Structure -->
             <div class="orbit">
-              <!-- Rotating Lines & Dots -->
               <div class="orbit-rings">
                 <div class="ring ring-1"></div>
                 <div class="ring ring-2"></div>
@@ -764,7 +766,6 @@
                 <span class="orbit-dot three"></span>
               </div>
               
-              <!-- New Wrapper for Floating Square -->
               <div class="orbit-core-wrapper">
                 <div class="orbit-core">
                   <img src="https://i.ibb.co/HTMT7D7g/techpromts-logo.jpg" alt="Techpromts Logo" class="orbit-logo">
@@ -989,7 +990,6 @@
         header.classList.toggle("scrolled", window.scrollY > 24);
         backToTop.classList.toggle("visible", window.scrollY > 650);
 
-        // Parallax for hero image
         if (heroImg && !reducedMotion && window.scrollY < window.innerHeight) {
           heroImg.style.transform = `translate(-50%, calc(-50% + ${window.scrollY * 0.4}px)) scale(1.05)`;
         }
