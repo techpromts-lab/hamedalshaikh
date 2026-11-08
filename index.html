@@ -23,7 +23,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="preconnect" href="https://i.ibb.co" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" referrerpolicy="no-referrer">
@@ -134,7 +133,6 @@
     }
     .nav { min-height: 78px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
     
-    /* Updated Brand to full name */
     .brand { font-size: 18px; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
     .brand span { color: var(--accent); }
     
@@ -224,7 +222,7 @@
     }
 
     /* ============================================================
-       HERO — Full Bleed Image Background
+       HERO — Full Bleed Image Background (Dark Image)
        ============================================================ */
     .hero {
       position: relative;
@@ -253,7 +251,7 @@
       height: 100%;
       object-fit: cover;
       transform: translate(-50%, -50%) scale(1.05);
-      filter: saturate(1.2) contrast(1.1) brightness(0.8);
+      filter: saturate(1.1) contrast(1.05) brightness(0.7); /* Adjusted for dark image */
       animation: slow-zoom 30s ease-in-out infinite alternate;
       will-change: transform;
     }
@@ -321,12 +319,12 @@
     .hero h1 {
       margin: 26px 0 0; font-size: clamp(48px, 8vw, 100px); line-height: 1.05;
       letter-spacing: -.075em; font-weight: 800; text-wrap: balance;
-      text-shadow: 0 6px 40px rgba(8,9,13,0.9);
+      text-shadow: 0 6px 40px rgba(8,9,13,0.9), 0 0 60px rgba(167,139,250,0.15); /* Added glow */
     }
     .hero-role {
       min-height: 36px; margin: 26px 0 0; color: var(--soft);
       font-size: clamp(17px,2vw,22px);
-      text-shadow: 0 2px 16px rgba(8,9,13,0.85);
+      text-shadow: 0 2px 16px rgba(8,9,13,0.85), 0 0 40px rgba(167,139,250,0.1); /* Added glow */
     }
     .type-text { color: var(--accent); }
     .caret {
@@ -387,7 +385,7 @@
 
     #heroParticles {
       position: absolute; inset: 0; width: 100%; height: 100%;
-      pointer-events: none; opacity: .35; z-index: 0;
+      pointer-events: none; opacity: .45; z-index: 0; /* Increased opacity */
     }
     .hero-art > *:not(canvas) { position: relative; z-index: 1; }
 
@@ -440,7 +438,7 @@
     .focus-card h3 { margin: 0 0 9px; font-size: 16px; }
     .focus-card p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.9; }
 
-    /* Showcase - Updated for Image */
+    /* Showcase */
     .showcase { text-align: center; }
     .showcase .section-intro { margin-inline: auto; }
     .visual-card {
@@ -540,12 +538,12 @@
     .footer-links a:hover { color: #fff; }
 
     /* ============================================================
-       PREMIUM ANIMATIONS
+       PREMIUM ANIMATIONS (Enhanced)
        ============================================================ */
     [data-reveal] {
       opacity: 0;
-      transform: translateY(40px) scale(0.98);
-      filter: blur(10px);
+      transform: translateY(50px) scale(0.95);
+      filter: blur(12px);
       transition: opacity 1.2s var(--ease-out-expo), transform 1.2s var(--ease-out-expo), filter 1.2s var(--ease-out-expo);
       will-change: opacity, transform, filter;
     }
@@ -557,14 +555,14 @@
 
     [data-stagger] > * {
       opacity: 0;
-      transform: translateY(35px);
-      filter: blur(6px);
+      transform: translateY(40px) scale(0.98);
+      filter: blur(8px);
       transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo), filter 1s var(--ease-out-expo);
-      transition-delay: calc(var(--i, 0) * 100ms);
+      transition-delay: calc(var(--i, 0) * 120ms); /* Increased delay */
     }
     [data-stagger].is-visible > * {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
       filter: blur(0);
     }
 
@@ -653,7 +651,6 @@
 
   <header class="site-header" id="siteHeader">
     <nav class="nav shell" aria-label="Main navigation">
-      <!-- تم تعديل الاسم هنا -->
       <a class="brand" href="#home" aria-label="Hamed Alshaikh — home">Hamed Alshaikh<span>.</span></a>
       
       <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="navLinks">
@@ -672,15 +669,10 @@
 
   <main id="main">
     <section class="hero" id="home">
-      <!-- Full Bleed Image Background -->
+      <!-- Full Bleed Dark Image Background -->
       <div class="hero-bg-wrap" aria-hidden="true">
-        <!-- 
-          ملاحظة هامة: رابط Pinterest الذي أرسلته هو رابط صفحة وليس صورة مباشرة. 
-          لكي تظهر صورتك، اذهب للرابط، اضغط بالزر الأيمن على الصورة واختر "نسخ عنوان الصورة".
-          ثم استبدل الرابط أدناه بالرابط المباشر (الذي يبدأ بـ https://i.pinimg.com/...)
-        -->
         <img 
-          src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop" 
+          src="https://i.ibb.co/8LfcwQCT/image.jpg" 
           alt="" 
           class="hero-bg-img">
       </div>
@@ -816,7 +808,6 @@
       </div>
     </section>
 
-    <!-- Showcase Section Updated for Image -->
     <section class="showcase" id="showcase">
       <div class="shell">
         <div class="section-heading" data-reveal>
@@ -825,9 +816,8 @@
           <p class="section-intro">A featured visual currently playing behind the hero section. Explore the full experience below.</p>
         </div>
 
-        <a class="visual-card panel" href="https://www.pinterest.com/pin/725220346275477142/" target="_blank" rel="noopener noreferrer" data-reveal>
-          <!-- استبدل هذا الرابط برابط صورتك المباشر من Pinterest أيضاً -->
-          <img src="https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=2070&auto=format&fit=crop" alt="Featured Visual Showcase by Hamed Alshaikh" loading="lazy">
+        <a class="visual-card panel" href="https://i.ibb.co/8LfcwQCT/image.jpg" target="_blank" rel="noopener noreferrer" data-reveal>
+          <img src="https://i.ibb.co/8LfcwQCT/image.jpg" alt="Featured Visual Showcase by Hamed Alshaikh" loading="lazy">
           <div class="visual-overlay">
             <div class="visual-text">
               <span class="visual-kicker">FEATURED VISUAL</span>
@@ -913,7 +903,6 @@
 
   <footer>
     <div class="footer-inner shell">
-      <!-- تم تعديل الاسم هنا أيضاً -->
       <a class="brand" href="#home">Hamed Alshaikh<span>.</span></a>
       <p><span id="year">2026</span> Hamed Alshaikh. Made for the web.</p>
       <div class="footer-links">
@@ -946,7 +935,6 @@
 
         // Parallax for hero image
         if (heroImg && !reducedMotion && window.scrollY < window.innerHeight) {
-          // Combine the base animation scale with the scroll translation
           heroImg.style.transform = `translate(-50%, calc(-50% + ${window.scrollY * 0.4}px)) scale(1.05)`;
         }
 
@@ -1093,8 +1081,8 @@
             const rect = card.getBoundingClientRect();
             const x = (e.clientX - rect.left) / rect.width;
             const y = (e.clientY - rect.top) / rect.height;
-            const rotateX = (y - 0.5) * -8;
-            const rotateY = (x - 0.5) * 8;
+            const rotateX = (y - 0.5) * -10; // Increased intensity
+            const rotateY = (x - 0.5) * 10;  // Increased intensity
             card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
           });
 
@@ -1112,15 +1100,15 @@
             const y = e.clientY - rect.top;
             btn.style.setProperty("--mx", `${x}px`);
             btn.style.setProperty("--my", `${y}px`);
-            const moveX = (x / rect.width - 0.5) * 8;
-            const moveY = (y / rect.height - 0.5) * 8;
+            const moveX = (x / rect.width - 0.5) * 12; // Increased movement
+            const moveY = (y / rect.height - 0.5) * 12; // Increased movement
             btn.style.transform = `translate(${moveX}px, ${moveY}px) translateY(-3px)`;
           });
           btn.addEventListener("mouseleave", () => { btn.style.transform = ""; });
         });
       }
 
-      /* Hero particles */
+      /* Hero particles - Enhanced */
       function initParticles() {
         if (reducedMotion) return;
         const canvas = $("heroParticles");
@@ -1131,7 +1119,7 @@
         const DPR = Math.min(window.devicePixelRatio || 1, 2);
         let width = 0, height = 0;
         const particles = [];
-        const COUNT = window.innerWidth < 680 ? 15 : 28;
+        const COUNT = window.innerWidth < 680 ? 20 : 40; // More particles
 
         function resize() {
           const rect = canvas.parentElement.getBoundingClientRect();
@@ -1148,11 +1136,11 @@
           return {
             x: Math.random() * width,
             y: Math.random() * height,
-            r: Math.random() * 1.6 + 0.5,
-            vx: (Math.random() - 0.5) * 0.25,
-            vy: (Math.random() - 0.5) * 0.25,
+            r: Math.random() * 2 + 0.5, // Slightly larger
+            vx: (Math.random() - 0.5) * 0.3,
+            vy: (Math.random() - 0.5) * 0.3,
             hue: Math.random() > 0.5 ? "167,139,250" : "120,162,255",
-            alpha: Math.random() * 0.5 + 0.2,
+            alpha: Math.random() * 0.6 + 0.2,
           };
         }
 
