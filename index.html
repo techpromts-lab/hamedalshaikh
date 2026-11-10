@@ -1,3 +1,6 @@
+Here is the updated code. I have added a small circular techpromts logo in the top-right corner of each network card (next to the arrow) so it clearly indicates that these links belong to techpromts.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1203,6 +1206,28 @@ button:focus-visible {
   fill: currentColor;
 }
 
+.brand-corner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mini-logo-top {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(var(--rgb), .5);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  opacity: 0.85;
+  transition: opacity .3s, transform .4s var(--ease-out);
+}
+
+.brand-card:hover .mini-logo-top {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
 .brand-arrow {
   font-size: 26px;
   color: var(--accent);
@@ -2128,7 +2153,10 @@ button:focus-visible {
             <div class="brand-icon">
               <svg><use href="#globe-icon"/></svg>
             </div>
-            <span class="brand-arrow">↗</span>
+            <div class="brand-corner">
+              <img src="https://i.ibb.co/HTMT7D7g/techpromts-logo.jpg" class="mini-logo-top" alt="techpromts logo" loading="lazy">
+              <span class="brand-arrow">↗</span>
+            </div>
           </div>
 
           <div class="brand-bottom">
@@ -2148,7 +2176,10 @@ button:focus-visible {
             <div class="brand-icon">
               <svg><use href="#github-icon"/></svg>
             </div>
-            <span class="brand-arrow">↗</span>
+            <div class="brand-corner">
+              <img src="https://i.ibb.co/HTMT7D7g/techpromts-logo.jpg" class="mini-logo-top" alt="techpromts logo" loading="lazy">
+              <span class="brand-arrow">↗</span>
+            </div>
           </div>
 
           <div class="brand-bottom">
@@ -2168,7 +2199,10 @@ button:focus-visible {
             <div class="brand-icon">
               <svg><use href="#instagram-icon"/></svg>
             </div>
-            <span class="brand-arrow">↗</span>
+            <div class="brand-corner">
+              <img src="https://i.ibb.co/HTMT7D7g/techpromts-logo.jpg" class="mini-logo-top" alt="techpromts logo" loading="lazy">
+              <span class="brand-arrow">↗</span>
+            </div>
           </div>
 
           <div class="brand-bottom">
@@ -2190,7 +2224,10 @@ button:focus-visible {
                    alt="Linktree logo"
                    loading="lazy">
             </div>
-            <span class="brand-arrow">↗</span>
+            <div class="brand-corner">
+              <img src="https://i.ibb.co/HTMT7D7g/techpromts-logo.jpg" class="mini-logo-top" alt="techpromts logo" loading="lazy">
+              <span class="brand-arrow">↗</span>
+            </div>
           </div>
 
           <div class="brand-bottom">
@@ -3088,3 +3125,4 @@ button:focus-visible {
 
 </body>
 </html>
+```
