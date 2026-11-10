@@ -325,14 +325,14 @@ button:focus-visible {
 
 .menu-button {
   position: relative;
+  display: grid;
+  place-items: center;
   width: 44px;
   height: 44px;
   border: 1px solid var(--line);
   border-radius: 14px;
   background: rgba(255,255,255,.08);
   color: white;
-  font-size: 22px;
-  line-height: 1;
   transition:
     background .3s var(--ease),
     border-color .3s var(--ease),
@@ -345,6 +345,46 @@ button:focus-visible {
 }
 
 .menu-button:active { transform: scale(.92); }
+
+.menu-icon {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 14px;
+  pointer-events: none;
+}
+
+.menu-icon i {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.8px;
+  border-radius: 2px;
+  background: currentColor;
+  transition:
+    top .42s var(--ease-out),
+    transform .48s var(--ease-out),
+    opacity .22s ease;
+}
+
+.menu-icon i:nth-child(1) { top: 0; }
+.menu-icon i:nth-child(2) { top: 6px; }
+.menu-icon i:nth-child(3) { top: 12px; }
+
+.menu-button[aria-expanded="true"] .menu-icon i:nth-child(1) {
+  top: 6px;
+  transform: rotate(45deg);
+}
+
+.menu-button[aria-expanded="true"] .menu-icon i:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(.4);
+}
+
+.menu-button[aria-expanded="true"] .menu-icon i:nth-child(3) {
+  top: 6px;
+  transform: rotate(-45deg);
+}
 
 .nav-links {
   position: fixed;
@@ -365,9 +405,10 @@ button:focus-visible {
   transform: translateY(-14px) scale(.97);
   transform-origin: top right;
   transition:
-    opacity .32s var(--ease-out),
-    visibility .32s var(--ease-out),
-    transform .38s var(--ease-out);
+    opacity .42s var(--ease-out),
+    visibility .42s var(--ease-out),
+    transform .5s var(--ease-out);
+  will-change: opacity, transform;
 }
 
 .nav-links.open {
@@ -385,9 +426,14 @@ button:focus-visible {
   opacity: 0;
   transform: translateY(-10px);
   transition:
-    opacity .4s var(--ease-out),
-    transform .4s var(--ease-out),
+    opacity .42s var(--ease-out),
+    transform .5s var(--ease-out),
     background .25s;
+  transition-delay: 0s;
+}
+
+.nav-links:not(.open) a {
+  transition-delay: 0s !important;
 }
 
 .nav-links.open a {
@@ -1388,12 +1434,12 @@ button:focus-visible {
 }
 
 /* =====================================
-   FOOTER + MOBILE DOCK
+   FOOTER
 ===================================== */
 
 .footer {
   border-top: 1px solid var(--line);
-  padding: 28px 0 125px;
+  padding: 28px 0 38px;
 }
 
 .footer-inner {
@@ -1401,6 +1447,11 @@ button:focus-visible {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+}
+
+.footer .logo {
+  font-size: clamp(18px, 4vw, 24px);
+  letter-spacing: -.055em;
 }
 
 .footer p {
@@ -1416,54 +1467,6 @@ button:focus-visible {
 }
 
 .footer .top:hover { transform: translateY(-3px); }
-
-.mobile-dock {
-  position: fixed;
-  z-index: 90;
-  left: 14px;
-  right: 14px;
-  bottom: calc(12px + env(safe-area-inset-bottom));
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 9px 9px 9px 16px;
-  border: 1px solid rgba(187,156,255,.45);
-  border-radius: 22px;
-  background: rgba(19,14,32,.93);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: 0 19px 55px rgba(0,0,0,.5);
-  animation: dockFloat 4.5s ease-in-out infinite alternate;
-}
-
-.mobile-dock strong {
-  display: block;
-  font: 700 15px var(--display);
-}
-
-.mobile-dock small {
-  display: block;
-  margin-top: 4px;
-  color: #a89db8;
-  font: 8px var(--mono);
-}
-
-.mobile-dock a {
-  padding: 13px 16px;
-  border-radius: 14px;
-  background: var(--purple);
-  color: #140c23;
-  font-size: 10px;
-  font-weight: 800;
-  white-space: nowrap;
-  transition: transform .35s var(--ease-out), background .3s;
-}
-
-.mobile-dock a:hover {
-  background: var(--lime);
-  transform: scale(1.04);
-}
 
 /* =====================================
    SCROLL REVEALS
@@ -1526,10 +1529,6 @@ button:focus-visible {
 
 @keyframes badgeFloat {
   to { translate: 0 -12px; }
-}
-
-@keyframes dockFloat {
-  to { transform: translateY(-4px); }
 }
 
 @keyframes circleBreathe {
@@ -1650,9 +1649,6 @@ button:focus-visible {
   .social-grid {
     grid-template-columns: repeat(3,1fr);
   }
-
-  .mobile-dock { display: none; }
-  .footer { padding-bottom: 30px; }
 }
 
 /* =====================================
@@ -1769,8 +1765,6 @@ button:focus-visible {
   .marquee-track {
     animation: none !important;
   }
-
-  .mobile-dock { animation: none !important; }
 }
 </style>
 </head>
@@ -1851,7 +1845,11 @@ button:focus-visible {
           id="menuButton"
           aria-label="Open menu"
           aria-expanded="false"
-          aria-controls="navLinks">☰</button>
+          aria-controls="navLinks">
+    <span class="menu-icon" aria-hidden="true">
+      <i></i><i></i><i></i>
+    </span>
+  </button>
 </nav>
 
 <div class="nav-links" id="navLinks">
@@ -2055,7 +2053,7 @@ button:focus-visible {
         </div>
 
         <div class="fact">
-          <small>FOUNDER</small>
+          <small>DEVELOPER</small>
           <strong>techpromts</strong>
         </div>
       </div>
@@ -2125,7 +2123,7 @@ button:focus-visible {
     <div class="studio-card">
 
       <div class="studio-kicker">
-        INDEPENDENT DIGITAL STUDIO · BY HAMED ALSHAIKH
+        INDEPENDENT DIGITAL STUDIO · BY HAMED ALSHAIKH &amp; TEAM
       </div>
 
       <!-- ANIMATED LOGO ENERGY -->
@@ -2406,7 +2404,7 @@ button:focus-visible {
   <div class="container footer-inner">
 
     <a class="logo" href="#home">
-      hamed<span>.</span>
+      Hamed Alshaikh
     </a>
 
     <p>
@@ -2418,16 +2416,6 @@ button:focus-visible {
   </div>
 </footer>
 
-</div>
-
-<!-- MOBILE DOCK -->
-<div class="mobile-dock">
-  <span>
-    <strong>techpromts.</strong>
-    <small>CREATIVE DIGITAL STUDIO</small>
-  </span>
-
-  <a href="#techpromts">DISCOVER ↗</a>
 </div>
 
 <script>
@@ -2486,7 +2474,6 @@ button:focus-visible {
     navLinks.classList.toggle("open", open);
     menu.setAttribute("aria-expanded", String(open));
     menu.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-    menu.textContent = open ? "×" : "☰";
   }
 
   function closeMenu() {
@@ -2569,8 +2556,6 @@ button:focus-visible {
      STAGGERED SCROLL REVEALS
   ===================================== */
 
-  // Give every reveal element a small delay
-  // based on its position among its siblings.
   const groups = new Map();
 
   $$(".reveal").forEach(el => {
@@ -2706,13 +2691,6 @@ button:focus-visible {
 
   /* =====================================
      ENERGY ENGINE AROUND PROFILE + LOGO
-
-     - Random moving light strokes
-     - Glowing orbit particles
-     - Additive blending for real glow
-     - Randomized directions and speeds
-     - Nothing touches the brand wordmark
-     - One shared animation loop
   ===================================== */
 
   const energyStages = [];
@@ -3116,10 +3094,6 @@ button:focus-visible {
 
   /* =====================================
      SINGLE ANIMATION LOOP
-
-     30 FPS on mobile, 45 FPS desktop.
-     Energy stages are rendered only when
-     visible in the viewport.
   ===================================== */
 
   function animate(time) {
