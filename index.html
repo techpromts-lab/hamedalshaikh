@@ -877,6 +877,7 @@ button:focus-visible {
   max-width: 830px;
   font: 500 clamp(26px,6vw,42px)/1.5 var(--display);
   letter-spacing: -.047em;
+  margin-top: 30px;
 }
 
 .about-lead strong { color: white; }
@@ -885,39 +886,6 @@ button:focus-visible {
   font-style: normal;
   color: var(--purple);
 }
-
-.facts {
-  display: grid;
-  grid-template-columns: repeat(2,1fr);
-  gap: 11px;
-  margin-top: 32px;
-}
-
-.fact {
-  padding: 18px 15px;
-  border: 1px solid var(--line);
-  border-radius: 17px;
-  background: rgba(255,255,255,.025);
-  transition:
-    border-color .35s,
-    background .35s,
-    transform .4s var(--ease-out);
-}
-
-.fact:hover {
-  border-color: rgba(187,156,255,.45);
-  background: rgba(187,156,255,.07);
-  transform: translateY(-3px);
-}
-
-.fact small {
-  display: block;
-  margin-bottom: 10px;
-  color: #8c849b;
-  font: 9px var(--mono);
-}
-
-.fact strong { font-size: 12px; }
 
 /* =====================================
    EXPERTISE
@@ -1278,18 +1246,6 @@ button:focus-visible {
   overflow-wrap: anywhere;
 }
 
-.alternate {
-  margin-top: 20px;
-  font: 10px/1.8 var(--mono);
-  color: #a8a0b7;
-}
-
-.alternate a {
-  color: var(--cyan);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
 /* =====================================
    PERSONAL LINKS
 ===================================== */
@@ -1630,10 +1586,6 @@ button:focus-visible {
 
   .section { padding: 125px 0; }
 
-  .facts {
-    grid-template-columns: repeat(4,1fr);
-  }
-
   .studio-card { padding: 65px 50px; }
   .logo-stage { width: 280px; }
 
@@ -1714,18 +1666,6 @@ button:focus-visible {
 
   .profile-stage { width: 460px; }
   .hero-desc { font-size: 14px; }
-
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1.25fr .75fr;
-    gap: 70px;
-  }
-
-  .about-grid .facts {
-    grid-template-columns: repeat(2,1fr);
-    align-self: center;
-    margin: 0;
-  }
 
   .network {
     grid-template-columns: repeat(4,minmax(0,1fr));
@@ -1872,7 +1812,7 @@ button:focus-visible {
 
     <div>
       <div class="hero-kicker reveal">
-        <i></i> CREATIVE DEVELOPER · JORDAN
+        <i></i> CREATIVE DEVELOPER
       </div>
 
       <h1 class="hero-title reveal">
@@ -2028,36 +1968,12 @@ button:focus-visible {
       Beyond <span class="muted">the screen.</span>
     </h2>
 
-    <div class="about-grid">
-      <p class="about-lead reveal">
-        The best digital work is more than code.
-        It's <strong>clarity, interaction and emotion</strong> —
-        where every detail matters and
-        <em>ideas become experiences.</em>
-      </p>
-
-      <div class="facts reveal">
-        <div class="fact">
-          <small>NAME</small>
-          <strong>Hamed Alshaikh</strong>
-        </div>
-
-        <div class="fact">
-          <small>ROLE</small>
-          <strong>Creative Developer</strong>
-        </div>
-
-        <div class="fact">
-          <small>LOCATION</small>
-          <strong>Jordan</strong>
-        </div>
-
-        <div class="fact">
-          <small>DEVELOPER</small>
-          <strong>techpromts</strong>
-        </div>
-      </div>
-    </div>
+    <p class="about-lead reveal">
+      The best digital work is more than code.
+      It's <strong>clarity, interaction and emotion</strong> —
+      where every detail matters and
+      <em>ideas become experiences.</em>
+    </p>
 
   </div>
 </section>
@@ -2286,14 +2202,6 @@ button:focus-visible {
         </a>
 
       </div>
-
-      <p class="alternate">
-        ALTERNATIVE WEBSITE:
-        <a href="https://techpromts.vercel.app"
-           target="_blank" rel="noopener noreferrer">
-          techpromts.vercel.app ↗
-        </a>
-      </p>
 
     </div>
 
