@@ -1556,10 +1556,6 @@ body.cursor-active .cursor-ring { opacity: 1; }
 <!-- NAVIGATION -->
 <nav class="navbar" aria-label="Main navigation">
   <span class="nav-status">OPEN TO IDEAS</span>
-  <button class="menu-button" id="menuButton"
-          aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
-    <span class="menu-icon" aria-hidden="true"><i></i><i></i><i></i></span>
-  </button>
 </nav>
 
 <div class="nav-links" id="navLinks">
@@ -1955,46 +1951,6 @@ body.cursor-active .cursor-ring { opacity: 1; }
       if (e.target.closest(interactiveSel)) {
         cursorRing.classList.remove("hover");
       }
-    });
-  }
-
-  /* =====================================
-     MOBILE MENU
-  ===================================== */
-
-  const menu = $("#menuButton");
-  const navLinks = $("#navLinks");
-
-  function setMenu(open) {
-    navLinks.classList.toggle("open", open);
-    menu.setAttribute("aria-expanded", String(open));
-    menu.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-  }
-
-  function closeMenu() { setMenu(false); }
-
-  menu.addEventListener("click", () => {
-    setMenu(!navLinks.classList.contains("open"));
-  });
-
-  $$("#navLinks a").forEach(link => {
-    link.addEventListener("click", closeMenu);
-  });
-
-  document.addEventListener("keydown", e => {
-    if (e.key === "Escape") closeMenu();
-  });
-
-  document.addEventListener("pointerdown", e => {
-    if (!menu.contains(e.target) && !navLinks.contains(e.target)) {
-      closeMenu();
-    }
-  });
-
-  const desktopQuery = matchMedia("(min-width:1020px)");
-  if (desktopQuery.addEventListener) {
-    desktopQuery.addEventListener("change", e => {
-      if (e.matches) closeMenu();
     });
   }
 
