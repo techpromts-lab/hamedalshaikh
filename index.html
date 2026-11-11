@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#080713">
-<meta name="description" content="Hamed Alshaikh — Creative Developer.">
+<meta name="description" content="Hamed Alshaikh — Creative Developer and founder of techpromts.">
 <title>Hamed Alshaikh — Creative Developer</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,7 +98,7 @@ button:focus-visible {
   animation: eyebrowLine 3.5s var(--ease-out) infinite alternate;
 }
 
-.section { padding: 68px 0; }
+.section { padding: 95px 0; }
 
 .section-title {
   font: 600 clamp(44px, 10vw, 90px)/1.02 var(--display);
@@ -1154,7 +1154,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
 .contact {
   position: relative;
   text-align: center;
-  padding: 85px 0 82px;
+  padding: 120px 0 110px;
   border-top: 1px solid var(--line);
 }
 .contact::before {
@@ -1391,9 +1391,9 @@ body.cursor-active .cursor-ring { opacity: 1; }
   .navbar { right: 35px; }
   .nav-status { display: inline-block; padding-left: 9px; }
   .nav-links { top: 96px; left: 35px; right: 35px; }
-  .hero { padding-top: 125px; min-height: 740px; }
+  .hero { padding-top: 175px; min-height: 850px; }
   .hero-title { font-size: clamp(90px,10vw,140px); }
-  .section { padding: 88px 0; }
+  .section { padding: 125px 0; }
   .studio-card { padding: 65px 50px; }
   .logo-stage { width: 280px; }
   .studio-actions { grid-template-columns: 1fr 1fr; }
@@ -1437,7 +1437,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
   }
   .nav-links .special { margin: 0; border-radius: 50px; padding-inline: 20px; }
 
-  .hero { min-height: 740px; padding: 125px 0 72px; }
+  .hero { min-height: 830px; padding: 190px 0 110px; }
   .hero-grid {
     display: grid;
     grid-template-columns: 1.05fr .95fr;
@@ -1470,59 +1470,6 @@ body.cursor-active .cursor-ring { opacity: 1; }
   .link-marquee { overflow-x: auto; }
   .marquee-track { animation: none !important; }
   .cursor-dot, .cursor-ring { display: none !important; }
-}
-
-/* ====== PREMIUM POLISH / MOBILE FIRST ====== */
-@media (max-width: 1019px) {
-  /* No hamburger, no redundant dark strip; desktop navigation stays intact. */
-  .navbar, .nav-links, .menu-button { display: none !important; }
-}
-@media (max-width: 699px) {
-  .hero { min-height: auto; padding: 76px 0 40px; }
-  .section { padding: 53px 0; }
-  .section-title { margin: 16px 0 21px; }
-  .profile-stage { margin-top: 10px; }
-  .studio-card { padding: 30px 17px; }
-  .studio-actions { margin-top: 20px; }
-  .logo-stage { margin: 17px auto 13px; }
-  .contact { padding: 64px 0 78px; }
-  .about-lead { margin-top: 19px; }
-  .network { margin-top: 18px; }
-  .social-grid { gap: 10px; }
-  .service { padding: 20px 0; }
-  .brand-card { min-height: 218px; }
-  .buttons { gap: 9px; }
-  .btn { min-height: 52px; }
-  .footer { padding: 23px 0 30px; }
-}
-/* Restore original premium arrow character, enhance its treatment. */
-.brand-arrow, .social-arrow, .marquee-link .arrow, .service b {
-  display: inline-block;
-  text-shadow: 0 0 16px currentColor;
-  filter: drop-shadow(0 0 7px rgba(187,156,255,.22));
-  transform-origin: 50% 50%;
-}
-.brand-arrow { font-family: var(--display); font-weight: 600; }
-.brand-card:hover .brand-arrow,
-.social-card:hover .social-arrow { transform: translate(5px,-5px) rotate(5deg) scale(1.12); }
-.marquee-link:hover .arrow { transform: translate(2px,-2px) rotate(6deg); }
-.marquee-link .arrow { transition: transform .45s var(--ease-out); }
-/* Fine visual details, with no content changes. */
-.studio-card { box-shadow: 0 30px 85px rgba(0,0,0,.33),inset 0 1px rgba(255,255,255,.11); }
-.brand-card { box-shadow: inset 0 1px rgba(255,255,255,.07),0 15px 40px rgba(0,0,0,.14); }
-.social-card { box-shadow: inset 0 1px rgba(255,255,255,.06); }
-.brand-card::before { animation: premiumSweep 10s ease-in-out infinite; }
-.brand-card:nth-child(2)::before { animation-delay: -2.5s; }
-.brand-card:nth-child(3)::before { animation-delay: -5s; }
-.brand-card:nth-child(4)::before { animation-delay: -7.5s; }
-.energy-ring.outer { box-shadow: 0 0 25px rgba(187,156,255,.07); }
-.hero-kicker { box-shadow: inset 0 1px rgba(255,255,255,.07),0 0 18px rgba(187,156,255,.06); }
-@keyframes premiumSweep {
-  0%,72%,100% { transform: translateX(-110%); }
-  85% { transform: translateX(115%); }
-}
-@media (prefers-reduced-motion: reduce) {
- .brand-card::before { animation: none !important; }
 }
 </style>
 </head>
@@ -1633,9 +1580,9 @@ body.cursor-active .cursor-ring { opacity: 1; }
         <span class="gradient">Creates.</span>
       </h1>
       <p class="hero-desc reveal">
-        I'm <strong>Hamed Alshaikh</strong> — a <strong>developer</strong> who really thinks
-        that design, code and imagination belong together. I craft digital experiences
-        where every detail matters.
+        I'm <strong>Hamed Alshaikh</strong> — a creative developer and founder of
+        <strong>techpromts</strong>. I craft digital experiences where design,
+        code and imagination come together.
       </p>
       <div class="buttons reveal">
         <a class="btn primary magnetic" href="#techpromts">MEET techpromts ➚</a>
@@ -1769,7 +1716,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
       <div class="studio-footer">DESIGN · CODE · IDEAS · techpromts</div>
     </div>
 
-    <div style="margin-top:48px">
+    <div style="margin-top:72px">
       <div class="eyebrow reveal">techpromts / DIGITAL NETWORK</div>
       <h2 class="section-title reveal">One identity.<br><span class="muted">Everywhere.</span></h2>
 
@@ -2322,12 +2269,12 @@ body.cursor-active .cursor-ring { opacity: 1; }
     sky.height = Math.round(h * dpr);
     skyCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    const count = Math.min(mobile ? 230 : 430, Math.round(w * h / (mobile ? 1600 : 2450)));
+    const count = Math.min(mobile ? 90 : 155, Math.round(w * h / 5200));
     stars = Array.from({ length: count }, () => ({
       x: random(0, w),
       y: random(0, h),
-      r: random(.25, 1.55),
-      alpha: random(.18, .88),
+      r: random(.3, 1.3),
+      alpha: random(.15, .75),
       phase: random(0, TAU)
     }));
   }
@@ -2388,8 +2335,8 @@ body.cursor-active .cursor-ring { opacity: 1; }
 
     if (reduced) return;
 
-    spawnClock += dt * (mobile ? 3.9 : 5.7);
-    const maxMeteors = mobile ? 10 : 18;
+    spawnClock += dt * (mobile ? 3.2 : 4.5);
+    const maxMeteors = mobile ? 9 : 15;
     while (spawnClock >= 1 && meteors.length < maxMeteors) {
       meteors.push(makeMeteor());
       spawnClock--;
