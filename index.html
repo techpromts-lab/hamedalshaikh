@@ -1513,6 +1513,37 @@ body.cursor-active .cursor-ring { opacity: 1; }
   </div>
 </div>
 
+<!-- CRITICAL FALLBACK: hides the loader even if the main script fails or
+     the external images hang. Runs independently of everything else. -->
+<script>
+(function(){
+  var el = document.getElementById('loader');
+  if (!el) return;
+  var done = false;
+  function kill(){
+    if (done) return;
+    done = true;
+    try { el.classList.add('hidden'); } catch(e){}
+    setTimeout(function(){ try { el.remove(); } catch(e){} }, 1000);
+  }
+  // 1) Hard cap — never stay longer than 2.5s
+  setTimeout(kill, 2500);
+  // 2) If page already loaded
+  if (document.readyState === 'complete') {
+    setTimeout(kill, 200);
+  } else {
+    // 3) DOM ready → hide after 900ms
+    document.addEventListener('DOMContentLoaded', function(){
+      setTimeout(kill, 900);
+    }, { once: true });
+    // 4) Full load → hide fast
+    window.addEventListener('load', function(){
+      setTimeout(kill, 200);
+    }, { once: true });
+  }
+})();
+</script>
+
 <noscript><style>.loader{display:none!important}</style></noscript>
 
 <canvas id="cosmos" aria-hidden="true"></canvas>
@@ -1841,36 +1872,29 @@ body.cursor-active .cursor-ring { opacity: 1; }
   document.documentElement.classList.add("js");
 
   /* =====================================
-     LOADING SCREEN + PERCENT COUNTER
+     LOADING SCREEN — PERCENT COUNTER ONLY
+     (hiding is handled by the critical
+     fallback inline script right after the
+     loader markup, so it always runs even
+     if this main script fails)
   ===================================== */
 
-  let loaderClosed = false;
-
-  function hideLoader() {
-    if (loaderClosed) return;
-    loaderClosed = true;
-    const loader = $("#loader");
-    if (!loader) return;
-    loader.classList.add("hidden");
-    setTimeout(() => loader.remove(), 1000);
-  }
-
-  const loaderPercentEl = $("#loaderPercent");
+  const loaderPercentEl = document.getElementById("loaderPercent");
   let loadPercent = 0;
-  const loadPercentTimer = setInterval(() => {
+
+  const loaderPercentTimer = setInterval(() => {
     loadPercent = Math.min(100, loadPercent + Math.random() * 16 + 5);
     if (loaderPercentEl) {
       loaderPercentEl.textContent = Math.floor(loadPercent) + "%";
     }
-    if (loadPercent >= 100) clearInterval(loadPercentTimer);
+    if (loadPercent >= 100) clearInterval(loaderPercentTimer);
   }, 75);
 
-  const loaderTimeout = setTimeout(hideLoader, reduced ? 100 : 1600);
-
-  addEventListener("load", () => {
-    clearTimeout(loaderTimeout);
-    if (loadPercentEl) loadPercentEl.textContent = "100%";
-    setTimeout(hideLoader, reduced ? 0 : 450);
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+      if (loaderPercentEl) loaderPercentEl.textContent = "100%";
+      clearInterval(loaderPercentTimer);
+    }, 500);
   }, { once: true });
 
   /* =====================================
@@ -1919,7 +1943,6 @@ body.cursor-active .cursor-ring { opacity: 1; }
     }
     requestAnimationFrame(cursorTick);
 
-    // Hover scaling on interactive elements
     const interactiveSel =
       "a, button, .brand-card, .social-card, .marquee-link, .service, .email";
 
