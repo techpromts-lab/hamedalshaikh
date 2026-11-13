@@ -1551,6 +1551,296 @@ body.cursor-active .cursor-ring { opacity: 1; }
   .marquee-track { animation: none !important; }
   .cursor-dot, .cursor-ring { display: none !important; }
 }
+
+/* ====== DEEP FIELD — ADDITIVE MOTION AND 3D ====== */
+html { scroll-padding-top: 98px; }
+
+.hero, #about, #expertise, #socials, .contact {
+  position: relative;
+  isolation: isolate;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  inset: 0;
+  background: radial-gradient(ellipse at 72% 52%,rgba(123,73,226,.15),transparent 57%);
+}
+.hero-title { perspective: 900px; }
+.js .hero-title.visible span:nth-child(3) {
+  animation: heroFloat 8s var(--ease-smooth) 2s infinite alternate,
+             gradientFlow 7s var(--ease-smooth) infinite alternate;
+}
+
+/* Preserve the original arrows and glyphs, and light their existing motion. */
+.brand-arrow, .social-arrow, .service b {
+  text-shadow: 0 0 14px rgba(223,255,150,.23);
+}
+.brand-card:hover .brand-arrow, .social-card:hover .social-arrow, .service:hover b {
+  text-shadow: 0 0 16px currentColor;
+}
+
+.deep-field {
+  position: absolute;
+  z-index: 0;
+  width: var(--field-size, 180px);
+  aspect-ratio: 1;
+  pointer-events: none;
+  user-select: none;
+}
+.deep-field.is-rendered {
+  background: radial-gradient(closest-side,rgba(var(--field-glow,155,112,250),.11),transparent 90%);
+}
+.deep-field > canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.deep-field::before, .deep-field::after {
+  content: "";
+  position: absolute;
+  inset: 10%;
+  border: 1px solid rgba(var(--field-glow,155,112,250),.17);
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+.deep-field.is-rendered::before, .deep-field.is-rendered::after { opacity: 1; }
+.deep-field::before { transform: rotate(-28deg) scaleY(.46); }
+.deep-field::after {
+  inset: 5%;
+  border-style: dotted;
+  border-color: rgba(var(--field-glow,155,112,250),.26);
+  transform: rotate(29deg) scaleY(.53);
+}
+
+.deep-field--portrait {
+  --field-size: clamp(68px,17vw,124px);
+  --field-glow: 181,147,255;
+  inset: 0 auto auto 2%;
+  z-index: 4;
+}
+.deep-field--orbit {
+  inset: 0;
+  width: 100%;
+  z-index: 4;
+}
+.deep-field--orbit.is-rendered { background: none; }
+.deep-field--orbit::before, .deep-field--orbit::after { content: none; }
+
+.deep-field--about {
+  --field-size: clamp(106px,29vw,168px);
+  --field-glow: 184,143,255;
+  top: -42px;
+  right: -7px;
+}
+.deep-field--expertise {
+  --field-size: clamp(84px,23vw,136px);
+  --field-glow: 112,233,224;
+  top: -36px;
+  right: -4px;
+}
+.deep-field--studio-a, .deep-field--studio-b {
+  z-index: -1;
+  --field-size: clamp(78px,20vw,150px);
+}
+.deep-field--studio-a {
+  --field-glow: 196,146,255;
+  top: 24px;
+  left: -5px;
+}
+.deep-field--studio-b {
+  --field-glow: 138,239,230;
+  top: 110px;
+  right: -9px;
+}
+.deep-field--social {
+  --field-size: clamp(79px,22vw,130px);
+  --field-glow: 241,147,205;
+  top: -36px;
+  right: -4px;
+}
+.deep-field--contact {
+  --field-size: clamp(82px,24vw,158px);
+  --field-glow: 184,143,255;
+  top: -64px;
+  right: -2px;
+}
+
+#about .container, #expertise .container, #socials .container { position: relative; }
+#about .eyebrow, #about .section-title, #about .about-lead,
+#expertise .eyebrow, #expertise .section-title, #expertise .services,
+#socials .eyebrow, #socials .section-title, #socials .social-grid,
+.contact .container > :not(.deep-field) {
+  position: relative;
+  z-index: 1;
+}
+
+.studio-card::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  opacity: .58;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 8% 24%,rgba(183,109,255,.22),transparent 31%),
+    radial-gradient(ellipse at 91% 62%,rgba(87,225,216,.13),transparent 31%);
+  transform: scale(1);
+}
+.deep-active.studio-card::after {
+  animation: deepStudioLight 10s var(--ease-smooth) infinite alternate;
+}
+@keyframes deepStudioLight {
+  to { opacity: .86; transform: scale(1.16); }
+}
+
+.service::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg,rgba(187,156,255,.11),transparent 70%);
+  opacity: 0;
+  transform: scaleX(.55);
+  transform-origin: left;
+  transition: opacity .45s var(--ease-out),transform .65s var(--ease-out);
+}
+.service:hover::before { opacity: 1; transform: scaleX(1); }
+
+/* Keep the original card tilt active after the existing reveal transition. */
+.js .brand-card.reveal.visible {
+  transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(var(--ty));
+}
+.js .social-card.reveal.visible:hover { transform: translateY(-6px); }
+.js .service.reveal.visible:hover { transform: translateX(12px); }
+.js .email.reveal.visible:hover { transform: translateY(-5px); }
+.js a.reveal:focus-visible {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition-delay: 0s;
+}
+.social-card { position: relative; isolation: isolate; }
+.social-card::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(ellipse at 14% 0%,rgba(187,156,255,.24),transparent 74%);
+  transition: opacity .38s var(--ease-out);
+}
+.social-card:hover::before, .social-card:focus-visible::before, .social-card:active::before { opacity: 1; }
+
+@media (hover:hover) and (pointer:fine) {
+  .js .brand-card.reveal.visible:is(:hover,:focus-visible),
+  .js .social-card.reveal.visible:is(:hover,:focus-visible),
+  .js .service.reveal.visible:hover,
+  .js .email.reveal.visible:is(:hover,:focus-visible) { transition-delay: 0s; }
+}
+
+@media (hover:none) {
+  .brand-card:active, .social-card:active, .email:active { scale: .986; }
+}
+
+/* Keep all six original links available on touch with no hamburger. */
+@media (max-width:1019px) {
+  .nav-links {
+    top: max(12px,env(safe-area-inset-top));
+    left: max(12px,env(safe-area-inset-left));
+    right: max(12px,env(safe-area-inset-right));
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 5px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(187,156,255,.33) transparent;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+  .nav-links a {
+    display: inline-flex;
+    min-height: 42px;
+    flex: 0 0 auto;
+    align-items: center;
+    padding: 8px clamp(8px,2vw,15px);
+    font-size: clamp(10px,2.5vw,12px);
+    white-space: nowrap;
+    opacity: 1;
+    transform: none;
+  }
+  .nav-links .special { margin-top: 0; }
+  .nav-links a:focus-visible { outline-offset: -3px; }
+  .navbar {
+    position: absolute;
+    top: calc(max(12px,env(safe-area-inset-top)) + 64px);
+    right: max(14px,env(safe-area-inset-right));
+    min-height: 28px;
+    padding: 5px 9px;
+    border-radius: 100px;
+    pointer-events: none;
+  }
+  .nav-status { display: inline-block; padding: 0; font-size: 8px; }
+}
+@media (min-width:700px) and (max-width:1019px) {
+  .nav-links { left: 35px; right: auto; max-width: calc(100% - 220px); }
+  .navbar {
+    position: fixed;
+    top: max(12px,env(safe-area-inset-top));
+    right: 35px;
+    min-height: 52px;
+    padding-inline: 16px;
+    border-radius: 20px;
+  }
+  .nav-status { font-size: 9px; }
+}
+@media (max-width:699px) {
+  .deep-field--about, .deep-field--expertise, .deep-field--social { opacity: .72; }
+  .deep-field--studio-a, .deep-field--studio-b { opacity: .83; }
+  .deep-field--contact { opacity: .68; }
+}
+@media (min-width:700px) {
+  .deep-field--about {
+    --field-size: clamp(160px,25vw,355px);
+    right: -5px;
+    top: 52%;
+    translate: 0 -50%;
+  }
+  #about .about-lead { max-width: min(830px,69%); }
+  .deep-field--expertise {
+    --field-size: clamp(140px,20vw,256px);
+    top: -83px;
+    right: 4%;
+    opacity: .83;
+  }
+  .deep-field--studio-a, .deep-field--studio-b { --field-size: clamp(154px,22vw,330px); }
+  .deep-field--studio-a { top: 9%; left: 1%; }
+  .deep-field--studio-b { top: 24%; right: 1%; }
+  .deep-field--social {
+    --field-size: clamp(125px,19vw,220px);
+    top: -77px;
+    right: 2%;
+  }
+  .deep-field--contact {
+    --field-size: clamp(142px,24vw,300px);
+    top: 6%;
+    right: 0;
+    opacity: .86;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .deep-active.studio-card::after { animation: none; }
+  .brand-card:active, .social-card:active, .email:active { scale: none; }
+}
+
 </style>
 </head>
 
@@ -1673,6 +1963,8 @@ body.cursor-active .cursor-ring { opacity: 1; }
              alt="Hamed Alshaikh profile picture" id="profileImage" fetchpriority="high">
       </div>
       <canvas class="energy-canvas" aria-hidden="true"></canvas>
+      <div class="deep-field deep-field--orbit" data-depth-scene="orbit" aria-hidden="true"><canvas></canvas></div>
+      <div class="deep-field deep-field--portrait" data-depth-scene="portrait" aria-hidden="true"><canvas></canvas></div>
       <div class="profile-badge one">
         CREATIVE DEVELOPER
         <strong>Hamed Alshaikh</strong>
@@ -1726,6 +2018,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
 
 <section class="section" id="about">
   <div class="container">
+    <div class="deep-field deep-field--about" data-depth-scene="about" aria-hidden="true"><canvas></canvas></div>
     <div class="eyebrow reveal">01 / ABOUT</div>
     <h2 class="section-title reveal">Beyond <span class="muted">the screen.</span></h2>
     <p class="about-lead reveal">
@@ -1737,6 +2030,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
 
 <section class="section" id="expertise">
   <div class="container">
+    <div class="deep-field deep-field--expertise" data-depth-scene="expertise" aria-hidden="true"><canvas></canvas></div>
     <div class="eyebrow reveal">02 / EXPERTISE</div>
     <h2 class="section-title reveal">Built to <span class="muted">stand out.</span></h2>
     <div class="services">
@@ -1754,6 +2048,8 @@ body.cursor-active .cursor-ring { opacity: 1; }
     <h2 class="section-title reveal">Meet <span style="color:var(--purple)">techpromts.</span></h2>
 
     <div class="studio-card">
+      <div class="deep-field deep-field--studio-a" data-depth-scene="studio-a" aria-hidden="true"><canvas></canvas></div>
+      <div class="deep-field deep-field--studio-b" data-depth-scene="studio-b" aria-hidden="true"><canvas></canvas></div>
       <div class="studio-kicker">INDEPENDENT DIGITAL STUDIO</div>
 
       <div class="energy-stage logo-stage" data-energy="logo">
@@ -1767,6 +2063,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
                alt="techpromts logo" id="studioLogo" loading="lazy">
         </div>
         <canvas class="energy-canvas" aria-hidden="true"></canvas>
+        <div class="deep-field deep-field--orbit" data-depth-scene="orbit" aria-hidden="true"><canvas></canvas></div>
       </div>
 
       <h3 class="studio-name">tech<span>promts</span></h3>
@@ -1861,6 +2158,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
 
 <section class="section" id="socials">
   <div class="container">
+    <div class="deep-field deep-field--social" data-depth-scene="social" aria-hidden="true"><canvas></canvas></div>
     <div class="eyebrow reveal">04 / PERSONAL LINKS</div>
     <h2 class="section-title reveal">Find me <span class="muted">online.</span></h2>
 
@@ -1888,6 +2186,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
 
 <section class="contact" id="contact">
   <div class="container">
+    <div class="deep-field deep-field--contact" data-depth-scene="contact" aria-hidden="true"><canvas></canvas></div>
     <div class="eyebrow reveal">05 / LET'S CREATE</div>
     <h2 class="reveal">Have an<br><span>idea?</span></h2>
     <p class="reveal">
@@ -2348,6 +2647,370 @@ body.cursor-active .cursor-ring { opacity: 1; }
   }
 
   /* =====================================
+     DEEP FIELD — PERSPECTIVE, LIGHT AND PARALLAX
+     Native Canvas 2D draws projected 3D geometry. No extra asset requests.
+  ===================================== */
+
+  const depthView = (() => {
+    const turn = Math.PI * 2;
+    const motion = matchMedia("(prefers-reduced-motion: reduce)");
+    const desktop = matchMedia("(hover: hover) and (pointer: fine)");
+    const sceneNodes = [...document.querySelectorAll("[data-depth-scene]")];
+    const studio = document.querySelector(".studio-card");
+    const pointAt = { x: 0, y: 0, targetX: 0, targetY: 0 };
+    const colors = {
+      lavender: [192, 151, 255],
+      violet: [164, 107, 255],
+      frost: [125, 239, 230],
+      rose: [251, 146, 211],
+      ice: [225, 215, 255]
+    };
+
+    function shape(vertices, faces) {
+      return { vertices, faces };
+    }
+
+    function crystal(sides, waist, taper, tip) {
+      const vertices = [];
+      const faces = [];
+      for (const [r, y, shift] of [[.65, -waist, 0], [.83, waist, .12]]) {
+        for (let i = 0; i < sides; i++) {
+          const a = i * turn / sides + shift;
+          vertices.push([Math.cos(a) * r, y, Math.sin(a) * r]);
+        }
+      }
+      vertices.push([.05, -tip, -.05], [-.13, taper, .09]);
+      for (let i = 0; i < sides; i++) {
+        const next = (i + 1) % sides;
+        faces.push([2 * sides, i, next]);
+        faces.push([i, sides + i, sides + next, next]);
+        faces.push([2 * sides + 1, sides + next, sides + i]);
+      }
+      return shape(vertices, faces);
+    }
+
+    function cube() {
+      const q = .64;
+      return shape(
+        [[-q,-q,-q],[q,-q,-q],[q,q,-q],[-q,q,-q],
+         [-q,-q,q],[q,-q,q],[q,q,q],[-q,q,q]],
+        [[0,1,2,3],[4,7,6,5],[0,4,5,1],[1,5,6,2],[2,6,7,3],[3,7,4,0]]
+      );
+    }
+
+    function octahedron() {
+      return shape(
+        [[.81,0,0],[0,0,.81],[-.81,0,0],[0,0,-.81],[0,-1.06,0],[0,1.06,0]],
+        [[4,0,1],[4,1,2],[4,2,3],[4,3,0],[5,1,0],[5,2,1],[5,3,2],[5,0,3]]
+      );
+    }
+
+    function torus(major, minor, segments, sides) {
+      const vertices = [], faces = [];
+      for (let i = 0; i < segments; i++) {
+        const a = i * turn / segments;
+        for (let j = 0; j < sides; j++) {
+          const b = j * turn / sides;
+          const r = major + minor * Math.cos(b);
+          vertices.push([r * Math.cos(a), r * Math.sin(a), minor * Math.sin(b)]);
+          faces.push([
+            i * sides + j,
+            ((i + 1) % segments) * sides + j,
+            ((i + 1) % segments) * sides + (j + 1) % sides,
+            i * sides + (j + 1) % sides
+          ]);
+        }
+      }
+      return shape(vertices, faces);
+    }
+
+    function icosahedron() {
+      const phi = (1 + Math.sqrt(5)) / 2;
+      const vertices = [
+        [-1,phi,0],[1,phi,0],[-1,-phi,0],[1,-phi,0],
+        [0,-1,phi],[0,1,phi],[0,-1,-phi],[0,1,-phi],
+        [phi,0,-1],[phi,0,1],[-phi,0,-1],[-phi,0,1]
+      ].map(v => v.map(n => n / Math.hypot(...v)));
+      return shape(vertices, [
+        [0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],
+        [1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],
+        [3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],
+        [4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]
+      ]);
+    }
+
+    const orb = icosahedron();
+    const blade = crystal(6, .51, 1.13, 1.23);
+    const prism = crystal(5, .39, .77, 1.13);
+    const ring = torus(.72, .22, 24, 8);
+    const light = [-.39, -.55, .74];
+    const models = {
+      portrait: { mesh: blade, tint: colors.lavender, spin: .46, phase: 1.1, ax: .16, az: -.34, scale: .29, edge: .52 },
+      about: { mesh: orb, tint: colors.lavender, spin: .25, phase: .5, ax: .45, az: -.24, scale: .36, edge: .42 },
+      expertise: { mesh: cube(), tint: colors.frost, spin: .31, phase: .7, ax: -.56, az: -.34, scale: .34, edge: .55 },
+      "studio-a": { mesh: ring, tint: colors.violet, spin: .24, phase: .34, ax: .75, az: -.41, scale: .36, edge: 0 },
+      "studio-b": { mesh: prism, tint: colors.frost, spin: -.34, phase: 1.7, ax: .28, az: .42, scale: .34, edge: .38 },
+      social: { mesh: octahedron(), tint: colors.rose, spin: .44, phase: 1.3, ax: -.19, az: -.29, scale: .35, edge: .49 },
+      contact: { mesh: ring, tint: colors.lavender, spin: -.27, phase: .55, ax: .7, az: .22, scale: .35, edge: 0 }
+    };
+
+    function rotate(v, cosX, sinX, cosY, sinY, cosZ, sinZ) {
+      const [x, y, z] = v;
+      const y1 = y * cosX - z * sinX;
+      const z1 = y * sinX + z * cosX;
+      const x2 = x * cosY + z1 * sinY;
+      return [
+        x2 * cosZ - y1 * sinZ,
+        x2 * sinZ + y1 * cosZ,
+        -x * sinY + z1 * cosY
+      ];
+    }
+
+    function shade(channel, brightness, specular) {
+      return Math.min(255, Math.round(12 + channel * brightness + specular));
+    }
+
+    function drawMesh(scene, t, px, py) {
+      const { ctx, size, model } = scene;
+      const { mesh, tint, spin, phase, ax, az, scale, edge } = model;
+      const angleX = ax + Math.sin(t * .59 + phase) * .17 + py * .22;
+      const angleY = phase + t * spin + px * .38;
+      const angleZ = az + Math.sin(t * .47 + phase) * .095;
+      const cx = size * .5 + px * size * .065;
+      const cy = size * (.5 + Math.sin(t * .83 + phase) * .027) + py * size * .065;
+      const radius = size * scale;
+      const camera = 3.65;
+      const cosX = Math.cos(angleX), sinX = Math.sin(angleX);
+      const cosY = Math.cos(angleY), sinY = Math.sin(angleY);
+      const cosZ = Math.cos(angleZ), sinZ = Math.sin(angleZ);
+      const world = mesh.vertices.map(v => rotate(v, cosX, sinX, cosY, sinY, cosZ, sinZ));
+      const projected = world.map(([x, y, z]) => {
+        const perspective = camera / (camera - z);
+        return [cx + x * radius * perspective, cy + y * radius * perspective];
+      });
+      const faces = [];
+      for (const ids of mesh.faces) {
+        const a = world[ids[0]], b = world[ids[1]], c = world[ids[2]];
+        const ux = b[0] - a[0], uy = b[1] - a[1], uz = b[2] - a[2];
+        const vx = c[0] - a[0], vy = c[1] - a[1], vz = c[2] - a[2];
+        let nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
+        const length = Math.hypot(nx, ny, nz);
+        if (length < .0001) continue;
+        // Two-sided surfaces with perspective-correct light on the visible side.
+        const sign = nx * -a[0] + ny * -a[1] + nz * (camera - a[2]) >= 0 ? 1 : -1;
+        nx *= sign / length;
+        ny *= sign / length;
+        nz *= sign / length;
+        const diffuse = Math.max(0, nx * light[0] + ny * light[1] + nz * light[2]);
+        const specular = Math.pow(diffuse, 9) * 81;
+        const brightness = .23 + .64 * diffuse;
+        const depth = ids.reduce((total, id) => total + world[id][2], 0) / ids.length;
+        const fill = `rgb(${tint.map(channel => shade(channel, brightness, specular)).join(",")})`;
+        faces.push({ ids, depth, fill, rim: .5 + .5 * diffuse });
+      }
+      faces.sort((a, b) => a.depth - b.depth);
+      for (const { ids, fill, rim } of faces) {
+        ctx.beginPath();
+        const [x, y] = projected[ids[0]];
+        ctx.moveTo(x, y);
+        for (let i = 1; i < ids.length; i++) ctx.lineTo(...projected[ids[i]]);
+        ctx.closePath();
+        ctx.fillStyle = fill;
+        ctx.fill();
+        // A thin matching stroke closes antialias seams on the curved mesh.
+        ctx.lineWidth = edge ? .76 : .68;
+        ctx.strokeStyle = edge ? `rgba(231,218,255,${edge * rim})` : fill;
+        ctx.stroke();
+      }
+
+      if (edge) {
+        for (const [index, direction] of [[0, 1], [Math.floor(projected.length / 2), -1]]) {
+          const [x, y] = projected[index];
+          const sparkle = .34 + .36 * (.5 + .5 * Math.sin(t * 2.1 + phase + index));
+          drawSpark(ctx, x, y, Math.max(2, size * .025) * direction, sparkle);
+        }
+      }
+    }
+
+    function drawSpark(ctx, x, y, r, alpha) {
+      ctx.strokeStyle = `rgba(243,234,255,${alpha})`;
+      ctx.lineWidth = .85;
+      ctx.beginPath();
+      ctx.moveTo(x - r, y);
+      ctx.lineTo(x + r, y);
+      ctx.moveTo(x, y - r);
+      ctx.lineTo(x, y + r);
+      ctx.stroke();
+    }
+
+    function orbitPoint(a, radius, tilt, rotation, cx, cy) {
+      const x = Math.cos(a) * radius;
+      const y = Math.sin(a) * radius * Math.cos(tilt);
+      const z = Math.sin(a) * Math.sin(tilt);
+      const p = 1 + z * .06;
+      return [
+        cx + (x * Math.cos(rotation) - y * Math.sin(rotation)) * p,
+        cy + (x * Math.sin(rotation) + y * Math.cos(rotation)) * p,
+        z
+      ];
+    }
+
+    function drawOrbits(scene, t, px, py) {
+      const { ctx, size } = scene;
+      const cx = size * (.5 + px * .009);
+      const cy = size * (.5 + py * .009);
+      for (let track = 0; track < 2; track++) {
+        const radius = size * (track ? .442 : .461);
+        const tilt = track ? -.52 : .49;
+        const rotation = (track ? .75 : -.67) + .14 * Math.sin(t * .45 + track);
+        const tint = track ? "140,236,229" : "193,154,255";
+        ctx.beginPath();
+        for (let i = 0; i <= 60; i++) {
+          const [x, y] = orbitPoint(i * turn / 60, radius, tilt, rotation, cx, cy);
+          if (i === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.lineWidth = .72;
+        ctx.strokeStyle = `rgba(${tint},.35)`;
+        ctx.stroke();
+
+        const direction = track ? -1 : 1;
+        const angle = t * (track ? .68 : .92) * direction + track * 2.3 + .8;
+        for (let k = 16; k > 0; k--) {
+          const [x0, y0, z0] = orbitPoint(angle - k * .035 * direction, radius, tilt, rotation, cx, cy);
+          const [x1, y1] = orbitPoint(angle - (k - 1) * .035 * direction, radius, tilt, rotation, cx, cy);
+          ctx.beginPath();
+          ctx.moveTo(x0, y0);
+          ctx.lineTo(x1, y1);
+          ctx.lineWidth = .9 + (17 - k) * .07;
+          ctx.strokeStyle = `rgba(${tint},${(17 - k) / 20 * (.64 + z0 * .4)})`;
+          ctx.stroke();
+        }
+        const [x, y, z] = orbitPoint(angle, radius, tilt, rotation, cx, cy);
+        const r = 2.6 + z * 1.3;
+        ctx.beginPath();
+        ctx.arc(x, y, r * 2.5, 0, turn);
+        ctx.fillStyle = `rgba(${tint},.19)`;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, turn);
+        ctx.fillStyle = "rgba(248,242,255,.93)";
+        ctx.fill();
+        drawSpark(ctx, x, y, r * 2.4, .52);
+      }
+    }
+
+    const scenes = [];
+    for (const node of sceneNodes) {
+      const canvas = node.querySelector("canvas");
+      const ctx = canvas && canvas.getContext("2d");
+      const kind = node.dataset.depthScene;
+      if (!ctx || (!models[kind] && kind !== "orbit")) continue;
+      scenes.push({ node, canvas, ctx, kind, model: models[kind], size: 0, dpr: 0,
+                    visible: false, elapsed: 0, lastFrame: 0, dirty: true });
+    }
+
+    function paint(scene, time, px, py) {
+      scene.ctx.clearRect(0, 0, scene.size, scene.size);
+      if (scene.kind === "orbit") drawOrbits(scene, time, px, py);
+      else drawMesh(scene, time, px, py);
+      scene.node.classList.add("is-rendered");
+      scene.dirty = false;
+    }
+
+    function sizeScene(scene) {
+      const size = Math.round(scene.node.clientWidth);
+      const dpr = Math.min(devicePixelRatio || 1, innerWidth < 700 ? 1.35 : 1.65);
+      if (!size || (size === scene.size && dpr === scene.dpr)) return;
+      scene.size = size;
+      scene.dpr = dpr;
+      scene.canvas.width = Math.max(1, Math.round(size * dpr));
+      scene.canvas.height = scene.canvas.width;
+      const scale = scene.canvas.width / size;
+      scene.ctx.setTransform(scale, 0, 0, scale, 0, 0);
+      scene.dirty = true;
+      if (motion.matches || !scene.visible) paint(scene, 0, 0, 0);
+    }
+
+    if ("IntersectionObserver" in window) {
+      const byNode = new Map(scenes.map(scene => [scene.node, scene]));
+      const observer = new IntersectionObserver(entries => {
+        for (const entry of entries) {
+          const scene = byNode.get(entry.target);
+          if (!scene) continue;
+          scene.visible = entry.isIntersecting;
+          scene.lastFrame = 0;
+        }
+      }, { rootMargin: "45px 0px" });
+      scenes.forEach(scene => observer.observe(scene.node));
+
+      if (studio) {
+        const studioObserver = new IntersectionObserver(([entry]) => {
+          studio.classList.toggle("deep-active", entry.isIntersecting);
+        }, { threshold: .03 });
+        studioObserver.observe(studio);
+      }
+    } else {
+      // Leave a still composition when visibility-aware animation isn't available.
+      scenes.forEach(scene => { scene.visible = false; });
+    }
+
+    if ("ResizeObserver" in window) {
+      const byNode = new Map(scenes.map(scene => [scene.node, scene]));
+      const observer = new ResizeObserver(entries => {
+        for (const entry of entries) sizeScene(byNode.get(entry.target));
+      });
+      scenes.forEach(scene => observer.observe(scene.node));
+    }
+
+    function resetPointer() {
+      pointAt.targetX = 0;
+      pointAt.targetY = 0;
+    }
+
+    addEventListener("pointermove", event => {
+      if (!desktop.matches || motion.matches || event.pointerType === "touch") return;
+      pointAt.targetX = event.clientX / Math.max(1, innerWidth) * 2 - 1;
+      pointAt.targetY = event.clientY / Math.max(1, innerHeight) * 2 - 1;
+    }, { passive: true });
+    document.documentElement.addEventListener("pointerleave", resetPointer);
+    addEventListener("blur", resetPointer);
+
+    function resetMotion() {
+      resetPointer();
+      for (const scene of scenes) {
+        scene.lastFrame = 0;
+        if (motion.matches && scene.size) paint(scene, 0, 0, 0);
+      }
+    }
+    if (motion.addEventListener) motion.addEventListener("change", resetMotion);
+    else if (motion.addListener) motion.addListener(resetMotion);
+
+    function resize() {
+      scenes.forEach(sizeScene);
+    }
+
+    function draw(time, dt) {
+      if (motion.matches) return;
+      const blend = 1 - Math.exp(-Math.max(dt, .008) * 6);
+      pointAt.x += (pointAt.targetX - pointAt.x) * blend;
+      pointAt.y += (pointAt.targetY - pointAt.y) * blend;
+      const minInterval = innerWidth < 700 ? 41 : 28;
+
+      for (const scene of scenes) {
+        if (!scene.visible || !scene.size) continue;
+        const gap = scene.lastFrame ? time - scene.lastFrame : minInterval;
+        if (!scene.dirty && gap < minInterval) continue;
+        scene.lastFrame = time;
+        scene.elapsed += Math.min(gap / 1000, .06);
+        paint(scene, scene.elapsed, pointAt.x, pointAt.y);
+      }
+    }
+
+    return { resize, draw };
+  })();
+
+  /* =====================================
      STARFIELD + METEORS
   ===================================== */
 
@@ -2356,6 +3019,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
 
   let w = 0, h = 0, mobile = false;
   let stars = [], meteors = [];
+  let depthStars = [];
   let spawnClock = 0, animationFrame = 0, previousTime = 0;
 
   function resizeSky() {
@@ -2377,6 +3041,18 @@ body.cursor-active .cursor-ring { opacity: 1; }
       phase: random(0, TAU),
       driftX: random(-3, 3),
       driftY: random(-2, 2)
+    }));
+
+    // A second, lightweight star layer adds depth without replacing the original stars.
+    const depthCount = Math.max(22, Math.min(mobile ? 61 : 108, Math.round(w * h / 4300)));
+    depthStars = Array.from({ length: depthCount }, (_, i) => ({
+      x: random(1, Math.max(2, w - 1)),
+      y: random(1, Math.max(2, h - 1)),
+      r: random(.36, 1.2),
+      alpha: random(.17, .51),
+      phase: random(0, TAU),
+      tint: i % 3 ? "201,169,255" : "140,236,229",
+      cross: i % (mobile ? 11 : 9) === 0
     }));
   }
 
@@ -2451,10 +3127,25 @@ body.cursor-active .cursor-ring { opacity: 1; }
       skyCtx.fill();
     }
 
+    for (const s of depthStars) {
+      const pulse = reduced ? .78 : .7 + .3 * Math.sin(time * .0018 + s.phase);
+      skyCtx.fillStyle = `rgba(${s.tint},${s.alpha * pulse})`;
+      const x = s.x + (reduced ? 0 : 2.3 * Math.sin(time * .00027 + s.phase));
+      const y = s.y + (reduced ? 0 : 2.8 * Math.cos(time * .00021 + s.phase));
+      skyCtx.fillRect(x, y, s.r, s.r);
+      if (s.cross) {
+        skyCtx.fillRect(x - 2.5, y, 5 + s.r, .62);
+        skyCtx.fillRect(x, y - 2.5, .62, 5 + s.r);
+      }
+    }
+
     if (reduced) return;
 
     // spawn slower for elegance
     spawnClock += dt * (mobile ? 1.4 : 2.0);
+    // Brief meteor showers add variety while honoring the existing meteor cap.
+    const shower = Math.max(0, Math.sin(time * .00062 - .55));
+    spawnClock += dt * ((mobile ? .35 : .62) + shower ** 7 * (mobile ? 1.5 : 2.8));
     const maxMeteors = mobile ? 6 : 11;
     while (spawnClock >= 1 && meteors.length < maxMeteors) {
       meteors.push(makeMeteor());
@@ -2493,6 +3184,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
     previousTime = time;
 
     drawSky(time, dt);
+    depthView.draw(time, dt);
     for (const state of energyStages) {
       if (state.visible) drawEnergy(state, time / 1000);
     }
@@ -2502,6 +3194,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
 
   resizeSky();
   energyStages.forEach(s => s.resize());
+  depthView.resize();
   if (!reduced) meteors.push(makeMeteor(), makeMeteor());
   animationFrame = requestAnimationFrame(animate);
 
@@ -2517,6 +3210,7 @@ body.cursor-active .cursor-ring { opacity: 1; }
       resizeSky();
       energyStages.forEach(s => s.resize());
       previousTime = 0;
+      depthView.resize();
       if (running && !document.hidden) {
         animationFrame = requestAnimationFrame(animate);
       }
