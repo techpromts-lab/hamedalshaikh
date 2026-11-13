@@ -1841,6 +1841,119 @@ html { scroll-padding-top: 98px; }
   .brand-card:active, .social-card:active, .email:active { scale: none; }
 }
 
+/* ====== STELLAR EDITION — FLOATING PORTRAIT AND BEVELLED STARS ====== */
+.profile-stage {
+  --portrait-lift: clamp(8px,2.6vw,16px);
+}
+.profile-stage .profile-circle {
+  /* Translate on its own channel so the original breathing scale stays intact. */
+  animation: circleBreathe 6.5s var(--ease-smooth) infinite alternate,
+             stellarPortraitFloat 7.4s cubic-bezier(.45,0,.55,1) infinite;
+}
+.stellar-portrait-shadow {
+  position: absolute;
+  z-index: 1;
+  top: 82%;
+  left: 26%;
+  width: 48%;
+  height: 8%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse,rgba(134,81,225,.42),transparent 72%);
+  opacity: .5;
+  pointer-events: none;
+  animation: stellarPortraitShadow 7.4s cubic-bezier(.45,0,.55,1) infinite;
+}
+.profile-stage.stellar-paused .profile-circle,
+.profile-stage.stellar-paused .stellar-portrait-shadow {
+  animation-play-state: paused;
+}
+
+@keyframes stellarPortraitFloat {
+  0%, 100% { translate: 0 3px; }
+  50% { translate: 0 calc(-1 * var(--portrait-lift)); }
+}
+@keyframes stellarPortraitShadow {
+  0%, 100% { opacity: .55; transform: scale(1); }
+  50% { opacity: .25; transform: scale(1.24,.81); }
+}
+
+.deep-field--hero-star {
+  --field-size: clamp(74px,20vw,153px);
+  --field-glow: 222,181,255;
+  right: 0;
+  bottom: 1%;
+  z-index: 4;
+}
+.deep-field--network-star {
+  --field-size: clamp(90px,24vw,210px);
+  --field-glow: 127,234,228;
+  top: -36px;
+  right: 0;
+  opacity: .79;
+}
+.deep-field--network-star::before { border-color: rgba(127,234,228,.2); }
+.deep-field--studio-gyre {
+  --field-size: clamp(69px,18vw,168px);
+  --field-glow: 226,138,232;
+  right: 2%;
+  bottom: 3%;
+  z-index: -1;
+  opacity: .66;
+}
+.deep-field--contact-star {
+  --field-size: clamp(66px,18vw,180px);
+  --field-glow: 252,170,219;
+  top: -58px;
+  left: 0;
+  opacity: .76;
+}
+
+.stellar-network { position: relative; }
+.stellar-network > :not(.deep-field) {
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width:700px) {
+  .deep-field--network-star { top: -70px; right: 5%; }
+  .deep-field--studio-gyre { right: 5%; bottom: 5%; }
+  .deep-field--contact-star { top: 10%; left: 4%; }
+}
+
+/* Phones, including short touchscreens held sideways. Desktop and tablet nav stays as-is. */
+@media (max-width:699px),
+       (max-width:1019px) and (max-height:520px) and (orientation:landscape) and (pointer:coarse) {
+  .navbar, .nav-links, .progress { display: none; }
+  html { scroll-padding-top: 22px; }
+
+  .hero {
+    min-height: auto;
+    padding-top: calc(clamp(48px,9svh,84px) + env(safe-area-inset-top,0px));
+    padding-bottom: 33px;
+  }
+  .hero-title {
+    font-size: clamp(52px,15.5vw,92px);
+    margin-block: 24px 19px;
+  }
+  .hero-desc { line-height: 1.8; }
+  .hero .buttons { margin-top: 22px; }
+  .profile-stage {
+    --portrait-lift: clamp(12px,4vw,17px);
+    width: min(100%,365px);
+    margin-top: 30px;
+  }
+  .deep-field--hero-star { opacity: .86; }
+  .deep-field--network-star { top: -30px; right: 1%; }
+  .deep-field--contact-star { top: -49px; left: 2%; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .profile-stage .profile-circle, .stellar-portrait-shadow {
+    animation: none;
+    translate: none;
+  }
+}
+
 </style>
 </head>
 
@@ -1957,6 +2070,7 @@ html { scroll-padding-top: 98px; }
       <div class="energy-ring outer"></div>
       <div class="energy-ring middle"></div>
       <div class="energy-ring inner"></div>
+      <div class="stellar-portrait-shadow" aria-hidden="true"></div>
       <div class="profile-circle">
         <span class="profile-fallback">H.</span>
         <img src="https://i.ibb.co/FL9m3k7V/IMG-2272.jpg"
@@ -1965,6 +2079,7 @@ html { scroll-padding-top: 98px; }
       <canvas class="energy-canvas" aria-hidden="true"></canvas>
       <div class="deep-field deep-field--orbit" data-depth-scene="orbit" aria-hidden="true"><canvas></canvas></div>
       <div class="deep-field deep-field--portrait" data-depth-scene="portrait" aria-hidden="true"><canvas></canvas></div>
+      <div class="deep-field deep-field--hero-star" data-depth-scene="hero-star" aria-hidden="true"><canvas></canvas></div>
       <div class="profile-badge one">
         CREATIVE DEVELOPER
         <strong>Hamed Alshaikh</strong>
@@ -2050,6 +2165,7 @@ html { scroll-padding-top: 98px; }
     <div class="studio-card">
       <div class="deep-field deep-field--studio-a" data-depth-scene="studio-a" aria-hidden="true"><canvas></canvas></div>
       <div class="deep-field deep-field--studio-b" data-depth-scene="studio-b" aria-hidden="true"><canvas></canvas></div>
+      <div class="deep-field deep-field--studio-gyre" data-depth-scene="studio-gyre" aria-hidden="true"><canvas></canvas></div>
       <div class="studio-kicker">INDEPENDENT DIGITAL STUDIO</div>
 
       <div class="energy-stage logo-stage" data-energy="logo">
@@ -2081,7 +2197,9 @@ html { scroll-padding-top: 98px; }
       <div class="studio-footer">DESIGN · CODE · IDEAS · techpromts</div>
     </div>
 
+    <div class="stellar-network">
     <div style="margin-top:72px">
+      <div class="deep-field deep-field--network-star" data-depth-scene="network-star" aria-hidden="true"><canvas></canvas></div>
       <div class="eyebrow reveal">techpromts / DIGITAL NETWORK</div>
       <h2 class="section-title reveal">One identity.<br><span class="muted">Everywhere.</span></h2>
 
@@ -2153,6 +2271,7 @@ html { scroll-padding-top: 98px; }
         </a>
       </div>
     </div>
+    </div>
   </div>
 </section>
 
@@ -2187,6 +2306,7 @@ html { scroll-padding-top: 98px; }
 <section class="contact" id="contact">
   <div class="container">
     <div class="deep-field deep-field--contact" data-depth-scene="contact" aria-hidden="true"><canvas></canvas></div>
+    <div class="deep-field deep-field--contact-star" data-depth-scene="contact-star" aria-hidden="true"><canvas></canvas></div>
     <div class="eyebrow reveal">05 / LET'S CREATE</div>
     <h2 class="reveal">Have an<br><span>idea?</span></h2>
     <p class="reveal">
@@ -2657,6 +2777,7 @@ html { scroll-padding-top: 98px; }
     const desktop = matchMedia("(hover: hover) and (pointer: fine)");
     const sceneNodes = [...document.querySelectorAll("[data-depth-scene]")];
     const studio = document.querySelector(".studio-card");
+    const floatingPortrait = document.querySelector(".profile-stage");
     const pointAt = { x: 0, y: 0, targetX: 0, targetY: 0 };
     const colors = {
       lavender: [192, 151, 255],
@@ -2739,12 +2860,61 @@ html { scroll-padding-top: 98px; }
       ]);
     }
 
+    // Bevelled stars: an inset ridge, sloped rim, and raised faces on both sides.
+    function stellarStar(points, notch, reach) {
+      const vertices = [], faces = [];
+      const count = points * 2;
+      const rings = [[.74,.22],[1,.065],[1,-.065],[.74,-.22]];
+      for (const [scale, z] of rings) {
+        for (let i = 0; i < count; i++) {
+          const a = i * turn / count - turn / 4;
+          const r = (i % 2 ? notch : reach) * scale;
+          vertices.push([Math.cos(a) * r, Math.sin(a) * r, z]);
+        }
+      }
+      const front = vertices.push([0,0,.42]) - 1;
+      const back = vertices.push([0,0,-.42]) - 1;
+      for (let i = 0; i < count; i++) {
+        const next = (i + 1) % count;
+        faces.push([front,i,next]);
+        for (let band = 0; band < rings.length - 1; band++) {
+          const a = band * count, b = (band + 1) * count;
+          faces.push([a+i,b+i,b+next,a+next]);
+        }
+        const last = (rings.length - 1) * count;
+        faces.push([back,last+next,last+i]);
+      }
+      return shape(vertices, faces);
+    }
+
+    // Two different intersecting rings with a faceted core form a small gyroscope.
+    function stellarGyroscope() {
+      const vertices = [], faces = [];
+      function include(mesh, transform) {
+        const start = vertices.length;
+        for (const v of mesh.vertices) vertices.push(transform(v));
+        for (const face of mesh.faces) faces.push(face.map(i => i + start));
+      }
+      include(torus(.85,.065,18,5), ([x,y,z]) => [x,y,z]);
+      const c = Math.cos(1.18), s = Math.sin(1.18);
+      include(torus(.67,.052,16,5), ([x,y,z]) => [x*c+z*s,y,-x*s+z*c]);
+      include(octahedron(), ([x,y,z]) => [x*.35,y*.36,z*.35]);
+      return shape(vertices, faces);
+    }
+
     const orb = icosahedron();
     const blade = crystal(6, .51, 1.13, 1.23);
     const prism = crystal(5, .39, .77, 1.13);
     const ring = torus(.72, .22, 24, 8);
+    const flareStar = stellarStar(4,.30,1.09);
+    const orbitStar = stellarStar(5,.47,.98);
+    const gyroscope = stellarGyroscope();
     const light = [-.39, -.55, .74];
     const models = {
+      "hero-star": { mesh: flareStar, tint: [230,174,255], spin: .54, phase: .42, ax: .22, az: -.24, scale: .38, edge: .48 },
+      "network-star": { mesh: orbitStar, tint: [136,243,233], spin: -.36, phase: .5, ax: .46, az: .43, scale: .36, edge: .37 },
+      "studio-gyre": { mesh: gyroscope, tint: [226,138,232], spin: .37, phase: .56, ax: .47, az: -.3, scale: .39, edge: 0 },
+      "contact-star": { mesh: flareStar, tint: [255,168,219], spin: -.48, phase: .52, ax: .37, az: .29, scale: .35, edge: .42 },
       portrait: { mesh: blade, tint: colors.lavender, spin: .46, phase: 1.1, ax: .16, az: -.34, scale: .29, edge: .52 },
       about: { mesh: orb, tint: colors.lavender, spin: .25, phase: .5, ax: .45, az: -.24, scale: .36, edge: .42 },
       expertise: { mesh: cube(), tint: colors.frost, spin: .31, phase: .7, ax: -.56, az: -.34, scale: .34, edge: .55 },
@@ -2950,6 +3120,13 @@ html { scroll-padding-top: 98px; }
         }, { threshold: .03 });
         studioObserver.observe(studio);
       }
+
+      if (floatingPortrait) {
+        const portraitObserver = new IntersectionObserver(([entry]) => {
+          floatingPortrait.classList.toggle("stellar-paused", !entry.isIntersecting);
+        }, { rootMargin: "45px 0px" });
+        portraitObserver.observe(floatingPortrait);
+      }
     } else {
       // Leave a still composition when visibility-aware animation isn't available.
       scenes.forEach(scene => { scene.visible = false; });
@@ -3022,6 +3199,75 @@ html { scroll-padding-top: 98px; }
   let depthStars = [];
   let spawnClock = 0, animationFrame = 0, previousTime = 0;
 
+  /* Perspective layer: foreground stars travel on the Z axis while the old sky remains. */
+  let stellarVolume = [];
+  let stellarPointer = { x: 0, y: 0 };
+  let stellarOffset = { x: 0, y: 0 };
+
+  function populateStellarVolume() {
+    const count = Math.max(12, Math.min(mobile ? 28 : 49, Math.round(w * h / 18200)));
+    stellarVolume = Array.from({ length: count }, (_, i) => ({
+      x: random(-.55, .55),
+      y: random(-.53, .53),
+      z: (i + .5) / count,
+      drift: random(.022,.055),
+      phase: random(0,TAU),
+      size: random(.62,1.7),
+      tint: ["185,149,255","140,236,229","255,186,224"][i % 3],
+      flare: i % 6 === 0
+    }));
+  }
+
+  function drawStellarVolume(time, dt) {
+    const easing = Math.min(1, dt * 4.4);
+    stellarOffset.x += (stellarPointer.x - stellarOffset.x) * easing;
+    stellarOffset.y += (stellarPointer.y - stellarOffset.y) * easing;
+    for (const star of stellarVolume) {
+      if (!reduced) star.z = (star.z + star.drift * dt) % 1;
+      const depth = star.z;
+      const perspective = .69 / (1.31 - depth * .87);
+      const x = w * .5 + (star.x * w - stellarOffset.x * 11) * perspective;
+      const y = h * .5 + (star.y * h - stellarOffset.y * 8) * perspective;
+      const radius = star.size * perspective;
+      if (x < -8 || x > w + 8 || y < -8 || y > h + 8) continue;
+      const pulse = reduced ? 1 : .77 + .23 * Math.sin(time * .002 + star.phase);
+      const fade = reduced ? .7 : Math.min(1, depth * 7, (1 - depth) * 7);
+      const alpha = (.24 + depth * .49) * pulse * fade;
+      skyCtx.fillStyle = `rgba(${star.tint},${alpha * .2})`;
+      skyCtx.beginPath();
+      skyCtx.arc(x, y, radius * 2.7, 0, TAU);
+      skyCtx.fill();
+      skyCtx.fillStyle = `rgba(246,231,255,${alpha})`;
+      skyCtx.fillRect(x - radius * .5, y - radius * .5, radius, radius);
+      if (star.flare) {
+        const reach = radius * (2.6 + depth * 2.2);
+        skyCtx.fillStyle = `rgba(${star.tint},${alpha * .83})`;
+        skyCtx.beginPath();
+        skyCtx.moveTo(x, y - reach);
+        skyCtx.lineTo(x + radius * .52, y - radius * .35);
+        skyCtx.lineTo(x + reach * .69, y);
+        skyCtx.lineTo(x + radius * .52, y + radius * .35);
+        skyCtx.lineTo(x, y + reach);
+        skyCtx.lineTo(x - radius * .52, y + radius * .35);
+        skyCtx.lineTo(x - reach * .69, y);
+        skyCtx.lineTo(x - radius * .52, y - radius * .35);
+        skyCtx.closePath();
+        skyCtx.fill();
+      }
+    }
+  }
+
+  if (finePointer && !reduced) {
+    addEventListener("pointermove", event => {
+      if (event.pointerType === "touch") return;
+      stellarPointer.x = event.clientX / Math.max(1,innerWidth) * 2 - 1;
+      stellarPointer.y = event.clientY / Math.max(1,innerHeight) * 2 - 1;
+    }, { passive: true });
+    document.documentElement.addEventListener("pointerleave", () => {
+      stellarPointer.x = stellarPointer.y = 0;
+    });
+  }
+
   function resizeSky() {
     if (!skyCtx) return;
     w = innerWidth;
@@ -3054,6 +3300,7 @@ html { scroll-padding-top: 98px; }
       tint: i % 3 ? "201,169,255" : "140,236,229",
       cross: i % (mobile ? 11 : 9) === 0
     }));
+    populateStellarVolume();
   }
 
   function makeMeteor() {
@@ -3138,6 +3385,8 @@ html { scroll-padding-top: 98px; }
         skyCtx.fillRect(x, y - 2.5, .62, 5 + s.r);
       }
     }
+
+    drawStellarVolume(time, dt);
 
     if (reduced) return;
 
